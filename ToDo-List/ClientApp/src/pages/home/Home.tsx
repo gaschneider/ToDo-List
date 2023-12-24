@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "@emotion/styled";
 import styles from "./Home.module.scss";
 
@@ -9,7 +8,7 @@ export const Home = () => {
         <header className={styles["App-header"]}>
           <a
             className={styles["App-link"]}
-            href="https://reactjs.org"
+            href="https://github.com/gaschneider/ToDo-List"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -22,5 +21,9 @@ export const Home = () => {
 };
 
 const HomeContainer = styled.div`
-  padding: 10px;
+  padding: 0px 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

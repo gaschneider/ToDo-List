@@ -1,11 +1,11 @@
-export const home = "home";
-export const newList = "newList";
-export const lists = "lists";
-export const taskDetail = "taskDetail";
+export const homeRoute = "home";
+export const newListRoute = "newList";
+export const listsRoute = "lists";
+export const taskDetailRoute = "taskDetail";
 
 export const routes = {
-  [home]: "/",
-  [newList]: "/new-list",
-  [lists]: "/lists",
-  [taskDetail]: "/task-detail"
+  [homeRoute]: "/home",
+  [newListRoute]: "/new-list",
+  [listsRoute]: "/lists",
+  [taskDetailRoute]: "/task-detail"
 };
