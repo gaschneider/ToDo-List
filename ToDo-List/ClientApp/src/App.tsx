@@ -1,9 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Layout } from "pages/Layout";
 import { Home } from "pages/home/Home";
-import { homeRoute, newListRoute, routes } from "routes";
+import { homeRoute, listsRoute, newListRoute, routes, taskDetailRoute } from "routes";
 import { NewList } from "pages/NewList";
 import { ErrorPage } from "pages/ErrorPage";
+import { TaskDetail } from "pages/TaskDetail";
+import { Lists } from "pages/Lists";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: routes[newListRoute],
         element: <NewList />
+      },
+      {
+        path: routes[listsRoute],
+        element: <Lists />
+      },
+      {
+        path: routes[taskDetailRoute],
+        element: <TaskDetail />
       }
     ]
   }

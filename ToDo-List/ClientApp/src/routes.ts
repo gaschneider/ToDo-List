@@ -7,5 +7,5 @@ export const routes = {
   [homeRoute]: "/home",
   [newListRoute]: "/new-list",
   [listsRoute]: "/lists",
-  [taskDetailRoute]: "/task-detail"
+  [taskDetailRoute]: "/task-detail/:taskId"
 };
