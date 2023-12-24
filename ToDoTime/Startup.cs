@@ -1,22 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToDo_List.Domain;
+using ToDoTime.Application;
+using ToDoTime.Infrastructure;
 
-namespace ToDo_List
+namespace ToDoTime
 {
-    public class Startup
+    public class Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; } = configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ToDoListsContext>(option => option.UseSqlServer(Configuration.GetConnectionString("ToDoListDB")));
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+            services.AddApplication();
+
+            services.AddDbContext<ToDoTimeSQLContext>(option => option.UseSqlServer(Configuration.GetConnectionString("ToDoTimeSQLDB")));
+#pragma warning disable CS8603 // Possível retorno de referência nula.
+            services.AddScoped<IToDoTimeSQLContext>(provider => provider.GetService<ToDoTimeSQLContext>());
+#pragma warning restore CS8603 // Possível retorno de referência nula.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,8 +38,11 @@ namespace ToDo_List
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
     }
 
-    
+
 }

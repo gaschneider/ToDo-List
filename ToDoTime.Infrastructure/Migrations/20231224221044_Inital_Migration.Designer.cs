@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ToDo_List.Domain;
+using ToDoTime.Infrastructure;
 
 #nullable disable
 
-namespace ToDo_List.Domain.Migrations
+namespace ToDoTime.Infrastructure.Migrations
 {
-    [DbContext(typeof(ToDoListsContext))]
-    [Migration("20231223064016_Initial_Migration")]
-    partial class Initial_Migration
+    [DbContext(typeof(ToDoTimeSQLContext))]
+    [Migration("20231224221044_Inital_Migration")]
+    partial class Inital_Migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ToDo_List.Domain.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ToDo_List.Domain.Models.ToDoList", b =>
+            modelBuilder.Entity("ToDoTime.Domain.Entities.TasksList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace ToDo_List.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDoLists");
+                    b.ToTable("TasksLists");
                 });
 #pragma warning restore 612, 618
         }
