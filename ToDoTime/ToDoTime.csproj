@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
-    <RootNamespace>ToDo_List</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,11 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ToDo-List.Domain\ToDo-List.Domain.csproj" />
+    <ProjectReference Include="..\ToDoTime.Application\ToDoTime.Application.csproj" />
+    <ProjectReference Include="..\ToDoTime.Infrastructure\ToDoTime.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

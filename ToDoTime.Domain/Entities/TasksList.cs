@@ -1,6 +1,6 @@
-﻿namespace ToDo_List.Domain.Models
+﻿namespace ToDoTime.Domain.Entities
 {
-    public class ToDoList
+    public class TasksList
     {
         public int Id { get; set; }
         public string Name { get; set; } = "My list";

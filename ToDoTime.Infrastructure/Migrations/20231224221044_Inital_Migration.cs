@@ -2,16 +2,16 @@
 
 #nullable disable
 
-namespace ToDo_List.Domain.Migrations
+namespace ToDoTime.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Migration : Migration
+    public partial class Inital_Migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ToDoLists",
+                name: "TasksLists",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,7 +21,7 @@ namespace ToDo_List.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ToDoLists", x => x.Id);
+                    table.PrimaryKey("PK_TasksLists", x => x.Id);
                 });
         }
 
@@ -29,7 +29,7 @@ namespace ToDo_List.Domain.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ToDoLists");
+                name: "TasksLists");
         }
     }
 }
