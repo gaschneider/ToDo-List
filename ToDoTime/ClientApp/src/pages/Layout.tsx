@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { listsMockData } from "mockData/ListData";
+import { tasksListsMockData } from "mockData/TasksListData";
 import logo from "../assets/logo.svg";
 import { Link, Outlet } from "react-router-dom";
-import { homeRoute, newListRoute, routes } from "routes";
+import { homeRoute, newListRoute, routes, tasksListDetailsRoute } from "routes";
 
 export const Layout: React.FC = () => {
   return (
@@ -25,6 +25,8 @@ const LayoutContainer = styled.div`
   grid-row-gap: 0px;
   background-color: black;
   min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
 `;
 
 const MainContainer = styled.div`
@@ -39,8 +41,16 @@ const LeftBar = () => {
       </AppTitle>
       <BodyContainer>
         <ListsContainer>
-          {listsMockData.map((list) => {
-            return <ListItem key={list.id}>{list.name}</ListItem>;
+          {tasksListsMockData.map((list) => {
+            return (
+              <ListItem key={list.id}>
+                <ListItemLink
+                  to={routes[tasksListDetailsRoute].replace(":listId", list.id.toString())}
+                >
+                  {list.name}
+                </ListItemLink>
+              </ListItem>
+            );
           })}
         </ListsContainer>
         <AddList />
@@ -52,7 +62,7 @@ const LeftBar = () => {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 120px 1fr;
+  grid-template-rows: 45px 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   padding: 4px;
@@ -69,6 +79,15 @@ const ListsContainer = styled.ul`
   color: #f9cc0b;
 `;
 const ListItem = styled.li``;
+const ListItemLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+`;
 
 const AddList = () => {
   return <AddNewListButton to={routes[newListRoute]}>+ New List</AddNewListButton>;

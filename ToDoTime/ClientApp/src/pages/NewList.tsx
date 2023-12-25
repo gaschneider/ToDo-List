@@ -1,7 +1,12 @@
 import styled from "@emotion/styled";
+import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
 
 export const NewList = () => {
-  return <NewListContainer>Lets start creating your list</NewListContainer>;
+  return (
+    <MainContainerTemplate title="New Task List">
+      <NewListContainer>Lets create something here</NewListContainer>
+    </MainContainerTemplate>
+  );
 };
 
 const NewListContainer = styled.div`

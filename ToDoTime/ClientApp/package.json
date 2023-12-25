@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@types/aria-query": "^5.0.4",
     "@types/jest": "^27.5.2",
     "@types/node": "^20.10.5",
     "@types/node-sass": "^4.11.7",
