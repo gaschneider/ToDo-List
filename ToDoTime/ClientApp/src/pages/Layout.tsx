@@ -4,6 +4,7 @@ import { tasksListsMockData } from "mockData/TasksListData";
 import logo from "../assets/logo.svg";
 import { Link, Outlet } from "react-router-dom";
 import { homeRoute, newListRoute, routes, tasksListDetailsRoute } from "routes";
+import { TasksList } from "shared/types/List";
 
 export const Layout: React.FC = () => {
   return (
@@ -42,15 +43,7 @@ const LeftBar = () => {
       <BodyContainer>
         <ListsContainer>
           {tasksListsMockData.map((list) => {
-            return (
-              <ListItem key={list.id}>
-                <ListItemLink
-                  to={routes[tasksListDetailsRoute].replace(":listId", list.id.toString())}
-                >
-                  {list.name}
-                </ListItemLink>
-              </ListItem>
-            );
+            return <LeftSidebarListItem key={list.id} list={list} />;
           })}
         </ListsContainer>
         <AddList />
@@ -74,11 +67,40 @@ const AppTitle = styled(Link)`
   border-bottom: 1px solid #f9cc0b;
 `;
 
-const BodyContainer = styled.div``;
-const ListsContainer = styled.ul`
-  color: #f9cc0b;
+const BodyContainer = styled.div`
+  margin-top: 20px;
+  padding: 8px 0px;
 `;
-const ListItem = styled.li``;
+
+const ListsContainer = styled.div`
+  color: #f9cc0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f9cc0b;
+`;
+
+interface LeftSidebarListItemProps {
+  list: TasksList;
+}
+
+const LeftSidebarListItem: React.FC<LeftSidebarListItemProps> = ({ list }) => {
+  return (
+    <ListItem>
+      <ListItemLink to={routes[tasksListDetailsRoute].replace(":listId", list.id.toString())}>
+        {list.name}
+      </ListItemLink>
+    </ListItem>
+  );
+};
+
+const ListItem = styled.span`
+  width: fit-content;
+  &:hover {
+  }
+`;
 const ListItemLink = styled(Link)`
   color: inherit;
   text-decoration: none;
