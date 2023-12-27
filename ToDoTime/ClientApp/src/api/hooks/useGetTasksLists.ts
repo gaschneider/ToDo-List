@@ -1,6 +1,6 @@
 import { tasksListsMockData } from "mockData/TasksListData";
 import { useCallback } from "react";
-import { TasksList } from "shared/types/List";
+import { TasksList } from "shared/types/TasksList";
 
 export const useGetTasksLists = () => {
   return useCallback(() => {

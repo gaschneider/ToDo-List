@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { BiMenu } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { homeRoute, routes } from "routes";
 import logo from "../../assets/logo.svg";
 import { css } from "@emotion/react";
+import { DynamicIcon } from "shared/DynamicIcon";
+import { AvailableIconsEnum } from "shared/availableIcons";
 
 interface AppTitleContainerProps {
   isSidebarExpanded: boolean;
@@ -25,7 +26,10 @@ export const AppTitleContainer: React.FC<AppTitleContainerProps> = ({
       isSidebarExpanded={isSidebarExpanded}
       onClick={() => setIsSidebarExpanded((prev) => !prev)}
     >
-      <BiMenu color="#f9cc0b" size={45} />
+      <DynamicIcon
+        nameIcon={AvailableIconsEnum.BiMenu}
+        propsIcon={{ color: "#f9cc0b", size: 45 }}
+      />
     </IconContainer>
   );
 

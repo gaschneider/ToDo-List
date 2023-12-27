@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
 import { useEffect, useState } from "react";
 import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
-import { TasksList } from "shared/types/List";
+import { TasksList } from "shared/types/TasksList";
 import { useLoaderData } from "react-router-dom";
 import { OneEightyRingWithBg } from "react-svg-spinners";
 

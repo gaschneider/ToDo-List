@@ -1,11 +1,11 @@
 import styled from "@emotion/styled/macro";
 import { useGetTasksLists } from "api/hooks/useGetTasksLists";
-import { Link } from "react-router-dom";
 import { routes, tasksListDetailsRoute } from "routes";
-import { TasksList } from "shared/types/List";
+import { TasksList } from "shared/types/TasksList";
 import { NoListFound } from "./NoListFound";
 import { useEffect, useMemo, useState } from "react";
 import { OneEightyRingWithBg } from "react-svg-spinners";
+import { LeftSidebarItem } from "shared/components/LeftSidebarItem";
 
 interface ListsContainerProps {
   isSidebarExpanded: boolean;
@@ -39,21 +39,45 @@ export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpande
   return (
     <>
       <ListsContainerTitle>My lists</ListsContainerTitle>
-      <Container isSidebarExpanded={isSidebarExpanded}>{containerContent}</Container>;
+      <Container isSidebarExpanded={isSidebarExpanded}>{containerContent}</Container>
     </>
   );
 };
 
 const Container = styled.div<{ isSidebarExpanded: boolean }>`
-  color: #f9cc0b;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-direction: column;
   margin-top: 10px;
   padding: ${(props) => (props.isSidebarExpanded ? "8px 15px 30px" : "8px 5px 30px")};
-  border-bottom: 1px solid #f9cc0b;
   width: -webkit-fill-available;
+  height: 100%;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  scrollbar-gutter: true;
+
+  *::-webkit-scrollbar {
+    display: block;
+    width: 16px;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: #00000000;
+  }
+
+  *::-webkit-scrollbar-track-piece {
+    background-color: #00000000;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #00000040;
+    border: 1px solid #ffffff40;
+    border-radius: 24px;
+  }
 `;
 
 const ListsContainerTitle = styled.span`
@@ -70,35 +94,11 @@ interface LeftSidebarListItemProps {
 
 const LeftSidebarListItem: React.FC<LeftSidebarListItemProps> = ({ isSidebarExpanded, list }) => {
   return (
-    <ListItem>
-      <ListItemLink to={routes[tasksListDetailsRoute].replace(":listId", list.id.toString())}>
-        {list.name}
-      </ListItemLink>
-      <ListItemTooltip isSidebarExpanded={isSidebarExpanded}>{list.name}</ListItemTooltip>
-    </ListItem>
+    <LeftSidebarItem
+      isSidebarExpanded={isSidebarExpanded}
+      to={routes[tasksListDetailsRoute].replace(":listId", list.id.toString())}
+      title={list.name}
+      icon={list.icon}
+    />
   );
 };
-
-const ListItem = styled.span`
-  width: 100%;
-  text-align: center;
-  padding: 6px;
-  border-radius: 8px;
-
-  &:hover {
-    background-color: white;
-    color: black;
-  }
-`;
-
-const ListItemTooltip = styled.span<{ isSidebarExpanded: boolean }>``;
-
-const ListItemLink = styled(Link)`
-  color: inherit;
-  text-decoration: none;
-
-  &:hover {
-    color: inherit;
-    text-decoration: none;
-  }
-`;

@@ -15,8 +15,8 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({ isExpanded, setIsExpan
       <AppTitleContainer isSidebarExpanded={isExpanded} setIsSidebarExpanded={setIsExpanded} />
       <BodyContainer>
         <ListsContainer isSidebarExpanded={isExpanded} />
-        <AddNewListButton isSidebarExpanded={isExpanded} />
       </BodyContainer>
+      <AddNewListButton isSidebarExpanded={isExpanded} />
     </Container>
   );
 };
@@ -24,7 +24,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({ isExpanded, setIsExpan
 const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 45px 1fr;
+  grid-template-rows: 45px 1fr 60px;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   padding: 4px;
