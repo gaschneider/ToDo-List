@@ -3,8 +3,8 @@ import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
 import { useEffect, useState } from "react";
 import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
 import { TasksList } from "shared/types/List";
-import spinner from "../assets/spinner.svg";
 import { useLoaderData } from "react-router-dom";
+import { OneEightyRingWithBg } from "react-svg-spinners";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
@@ -17,13 +17,13 @@ export const TasksListDetails: React.FC = () => {
     getTasksListDetails(listId).then((details) => {
       setListDetails(details);
     });
-  }, [listId]);
+  }, [getTasksListDetails, listId]);
 
   if (!listDetails) {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksListDetailContainer>
-          <SpinnerIcon src={spinner} />
+          <OneEightyRingWithBg color="#fff" width={150} height={150} />
         </TasksListDetailContainer>
       </MainContainerTemplate>
     );
@@ -45,9 +45,4 @@ const TasksListDetailContainer = styled.div`
   align-items: center;
   font-size: 45px;
   height: 100%;
-`;
-
-const SpinnerIcon = styled.img`
-  width: 150px;
-  height: 150px;
 `;

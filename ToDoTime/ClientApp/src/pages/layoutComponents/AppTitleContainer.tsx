@@ -3,7 +3,6 @@ import { BiMenu } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { homeRoute, routes } from "routes";
 import logo from "../../assets/logo.svg";
-import collapsedLogo from "../../assets/collapsedLogo.webp";
 import { css } from "@emotion/react";
 
 interface AppTitleContainerProps {
@@ -15,18 +14,19 @@ export const AppTitleContainer: React.FC<AppTitleContainerProps> = ({
   isSidebarExpanded,
   setIsSidebarExpanded
 }) => {
-  const appTitleRender = (
+  const appTitleRender = isSidebarExpanded && (
     <AppTitle to={routes[homeRoute]}>
-      <LogoComponent
-        isExpanded={isSidebarExpanded}
-        src={isSidebarExpanded ? logo : collapsedLogo}
-        alt="logo"
-      />
+      <LogoComponent src={logo} alt="logo" />
     </AppTitle>
   );
 
   const iconRender = (
-    <BiMenu color="#f9cc0b" onClick={() => setIsSidebarExpanded((prev) => !prev)} size={48} />
+    <IconContainer
+      isSidebarExpanded={isSidebarExpanded}
+      onClick={() => setIsSidebarExpanded((prev) => !prev)}
+    >
+      <BiMenu color="#f9cc0b" size={45} />
+    </IconContainer>
   );
 
   return (
@@ -37,8 +37,44 @@ export const AppTitleContainer: React.FC<AppTitleContainerProps> = ({
   );
 };
 
-const LogoComponent = styled.img<{ isExpanded: boolean }>`
-  width: ${(props) => (props.isExpanded ? "100%" : "30px")};
+type IconContainerStyleParams = {
+  isSidebarExpanded: boolean;
+};
+
+const iconContainerStyle = ({ isSidebarExpanded }: IconContainerStyleParams) => {
+  const commonStyle = css`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 45px;
+    cursor: pointer;
+  `;
+
+  if (isSidebarExpanded) {
+    return [
+      commonStyle,
+      css`
+        width: unset;
+      `
+    ];
+  }
+  return commonStyle;
+};
+
+const IconContainer = styled.div`
+  ${iconContainerStyle}
+`;
+
+const AppTitle = styled(Link)`
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LogoComponent = styled.img`
+  width: 100%;
 `;
 
 type AppTitleContainerStyleParams = {
@@ -46,26 +82,30 @@ type AppTitleContainerStyleParams = {
 };
 
 const appTitleContainerStyle = ({ isSidebarExpanded }: AppTitleContainerStyleParams) => {
-  if (isSidebarExpanded) {
-    return css`
-      display: flex;
-      width: 100%;
-      border-bottom: 1px solid #f9cc0b;
-    `;
-  }
-  return css`
+  const commonStyle = css`
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-bottom: 1px solid #f9cc0b;
+    height: fit-content;
   `;
+
+  if (isSidebarExpanded) {
+    return [
+      commonStyle,
+      css`
+        width: 100%;
+      `
+    ];
+  }
+  return [
+    commonStyle,
+    css`
+      flex-direction: column;
+    `
+  ];
 };
 
 const Container = styled.div`
   ${appTitleContainerStyle};
-`;
-
-const AppTitle = styled(Link)`
-  padding: 10px;
-  height: 20px;
-  width: 100%;
 `;

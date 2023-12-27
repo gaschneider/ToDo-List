@@ -35,7 +35,7 @@ const ContainerTitle = styled.span`
   justify-content: center;
   padding: 5px;
   border-bottom: 1px solid #f9cc0b;
-  height: 30px;
+  height: 35px;
 `;
 
 const ContainerContent = styled.div`
