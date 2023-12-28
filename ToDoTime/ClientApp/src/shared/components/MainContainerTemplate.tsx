@@ -20,11 +20,12 @@ export const MainContainerTemplate: React.FC<PropsWithChildren<MainContainerTemp
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 45px 1fr;
+  grid-template-rows: 45px 1fr 15px;
   grid-column-gap: 10px;
   grid-row-gap: 0px;
   padding: 4px;
   height: 100%;
+  margin-top: 5px;
 `;
 
 const ContainerTitle = styled.span`
@@ -39,5 +40,7 @@ const ContainerTitle = styled.span`
 `;
 
 const ContainerContent = styled.div`
-  height: 100%;
+  height: calc(100% - 40px);
+  overflow-x: hidden;
+  padding: 20px;
 `;

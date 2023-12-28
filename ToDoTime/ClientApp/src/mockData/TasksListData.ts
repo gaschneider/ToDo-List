@@ -4,7 +4,7 @@ import { TasksList } from "shared/types/TasksList";
 export const tasksListsMockData: TasksList[] = [
   {
     id: 1,
-    name: "Workout list",
+    name: "Workout list Workout list Workout list Workout list Workout list Workout list",
     description: "My personal workout list for weekdays",
     icon: AvailableIconsEnum.BiAbacus
   },
@@ -160,6 +160,84 @@ export const tasksListsMockData: TasksList[] = [
   },
   {
     id: 27,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 28,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 29,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 30,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 31,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 32,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 33,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 34,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 35,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 36,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 37,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 38,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 39,
+    name: "Shopping list",
+    description: "Holidays shopping list",
+    icon: AvailableIconsEnum.BiAlarmSnooze
+  },
+  {
+    id: 40,
     name: "Shopping list",
     description: "Holidays shopping list",
     icon: AvailableIconsEnum.BiAlarmSnooze

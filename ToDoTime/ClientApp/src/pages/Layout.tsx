@@ -20,7 +20,7 @@ const LayoutContainer = styled.div<{ isExpanded: boolean }>`
   position: relative;
   display: grid;
   grid-template-columns: ${(props) => (props.isExpanded ? "220px 1fr" : "60px 1fr")};
-  grid-template-rows: 1fr;
+  grid-template-rows: 100vh;
   grid-row-gap: 0px;
   background-color: black;
   min-height: 100vh;

@@ -23,7 +23,7 @@ export const TasksListDetails: React.FC = () => {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksListDetailContainer>
-          <OneEightyRingWithBg color="#fff" width={150} height={150} />
+          <OneEightyRingWithBg color="#f9cc0b" width={150} height={150} />
         </TasksListDetailContainer>
       </MainContainerTemplate>
     );

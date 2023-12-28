@@ -1,4 +1,4 @@
-import styled from "@emotion/styled/macro";
+import styled from "@emotion/styled";
 import { useGetTasksLists } from "api/hooks/useGetTasksLists";
 import { routes, tasksListDetailsRoute } from "routes";
 import { TasksList } from "shared/types/TasksList";
@@ -50,33 +50,30 @@ const Container = styled.div<{ isSidebarExpanded: boolean }>`
   align-items: center;
   flex-direction: column;
   margin-top: 10px;
-  padding: ${(props) => (props.isSidebarExpanded ? "8px 15px 30px" : "8px 5px 30px")};
-  width: -webkit-fill-available;
+  padding: ${(props) => (props.isSidebarExpanded ? "8px 15px 0px" : "8px 5px 0px")};
+  width: 100vw;
   height: 100%;
   overflow-y: overlay;
   overflow-x: hidden;
   scrollbar-gutter: true;
 
-  *::-webkit-scrollbar {
-    display: block;
-    width: 16px;
+  &::-webkit-scrollbar {
+    display: none;
   }
-  ::-webkit-scrollbar-button {
+  &::-webkit-scrollbar-button {
     display: none;
   }
 
-  *::-webkit-scrollbar-track {
-    background-color: #00000000;
+  &::-webkit-scrollbar-track {
+    display: none;
   }
 
-  *::-webkit-scrollbar-track-piece {
-    background-color: #00000000;
+  &::-webkit-scrollbar-track-piece {
+    display: none;
   }
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #00000040;
-    border: 1px solid #ffffff40;
-    border-radius: 24px;
+  &::-webkit-scrollbar-thumb {
+    display: none;
   }
 `;
 
@@ -99,6 +96,7 @@ const LeftSidebarListItem: React.FC<LeftSidebarListItemProps> = ({ isSidebarExpa
       to={routes[tasksListDetailsRoute].replace(":listId", list.id.toString())}
       title={list.name}
       icon={list.icon}
+      tooltipId={`list-${list.id}`}
     />
   );
 };

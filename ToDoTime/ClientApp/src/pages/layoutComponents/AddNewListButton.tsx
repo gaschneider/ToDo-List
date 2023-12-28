@@ -16,6 +16,7 @@ export const AddNewListButton: React.FC<AddNewListButtonProps> = ({ isSidebarExp
         to={routes[newListRoute]}
         title="Add new list"
         icon={AvailableIconsEnum.BiAddToQueue}
+        tooltipId="add-new-list"
       />
     </Container>
   );

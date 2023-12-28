@@ -24,7 +24,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({ isExpanded, setIsExpan
 const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 45px 1fr 60px;
+  grid-template-rows: 50px calc(100% - 110px) 60px;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   padding: 4px;

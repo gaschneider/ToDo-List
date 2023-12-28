@@ -91,7 +91,7 @@ const appTitleContainerStyle = ({ isSidebarExpanded }: AppTitleContainerStylePar
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #f9cc0b;
-    height: fit-content;
+    height: 100%;
   `;
 
   if (isSidebarExpanded) {
