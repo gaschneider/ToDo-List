@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { homeRoute, routes } from "routes";
 import logo from "../../assets/logo.svg";
 import { css } from "@emotion/react";
-import { DynamicIcon } from "shared/DynamicIcon";
 import { AvailableIconsEnum } from "shared/availableIcons";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
+import { BoxCustomIcon } from "shared/BoxCustomIcon";
 
 interface AppTitleContainerProps {
   isSidebarExpanded: boolean;
@@ -27,7 +27,7 @@ export const AppTitleContainer: React.FC<AppTitleContainerProps> = ({
       isSidebarExpanded={isSidebarExpanded}
       onClick={() => setIsSidebarExpanded((prev) => !prev)}
     >
-      <DynamicIcon
+      <BoxCustomIcon
         nameIcon={AvailableIconsEnum.BiMenu}
         propsIcon={{ color: APP_GOLD_COLOR, size: 45 }}
       />

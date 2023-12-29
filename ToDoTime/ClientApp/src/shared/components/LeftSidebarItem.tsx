@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { DynamicIcon } from "shared/DynamicIcon";
 import { AvailableIconsEnum } from "shared/availableIcons";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
+import { BoxCustomIcon } from "shared/BoxCustomIcon";
 
 interface LeftSidebarItemProps {
   isSidebarExpanded: boolean;
@@ -26,7 +26,7 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
         {isSidebarExpanded ? (
           title
         ) : (
-          <DynamicIcon nameIcon={icon} propsIcon={{ size: 30, color: "black" }} />
+          <BoxCustomIcon nameIcon={icon} propsIcon={{ size: 30, color: "black" }} />
         )}
       </ListItemLink>
       <ReactTooltip
