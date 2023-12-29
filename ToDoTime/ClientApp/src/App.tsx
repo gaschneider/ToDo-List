@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Layout } from "pages/Layout";
 import { Home } from "pages/home/Home";
 import {
@@ -9,19 +9,12 @@ import {
   taskDetailRoute,
   tasksListDetailsRoute
 } from "routes";
-import { NewList } from "pages/NewList";
+import { NewList } from "pages/newList/NewList";
 import { ErrorPage } from "pages/ErrorPage";
 import { TaskDetail } from "pages/TaskDetail";
 import { Lists } from "pages/Lists";
 import { TasksListDetails } from "pages/TasksListDetails";
-
-interface TasksListDetailsParams {
-  listId: string;
-}
-
-const tasksListDetailsLoader = async ({ params }: LoaderFunctionArgs<TasksListDetailsParams>) => {
-  return Number.isFinite(Number(params.listId)) ? Number(params.listId) : 0;
-};
+import { tasksListDetailsLoader } from "pages/routesLoader/tasksListDetailsLoader";
 
 const router = createBrowserRouter([
   {

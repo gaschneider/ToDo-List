@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
 import { useMemo, useState } from "react";
+// Useful to check for the props on react-select-virtualized since the lib doesnt have types
+// import Select from "react-select";
 import ReactSelect from "react-select-virtualized";
-import { CSSObjectWithLabel } from "react-select";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
 import { AvailableIconsEnum } from "shared/availableIcons";
 import { Input } from "shared/components/Input";
 import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
+import { APP_GOLD_COLOR } from "shared/constants/appStyles";
+import styles from "./NewList.module.scss";
 
 interface IIconOption {
   value: string;
@@ -42,6 +45,7 @@ export const NewList = () => {
 
         <Field>Icon</Field>
         <Value>
+          {/* Useful to check for the props on react-select-virtualized since the lib doesnt have types */}
           {/* <Select /> */}
           <ReactSelect
             value={selectedIcon}
@@ -60,18 +64,15 @@ export const NewList = () => {
                 </IconOptionRendered>
               );
             }}
-            styles={{
-              container: (base: CSSObjectWithLabel) => ({
-                ...base,
-                width: "100%",
-                "--scrollbar-color": "black"
-              })
+            classNames={{
+              container: () => styles["new-list-icon-select-container"],
+              menu: () => styles["new-list-icon-select-menu"]
             }}
           />
           {selectedIcon && (
             <BoxCustomIcon
               nameIcon={selectedIcon.value}
-              propsIcon={{ size: 35, color: "#f9cc0b", style: { marginLeft: 10 } }}
+              propsIcon={{ size: 35, color: APP_GOLD_COLOR, style: { marginLeft: 10 } }}
             />
           )}
         </Value>
@@ -89,7 +90,7 @@ const FormGrid = styled.div`
 `;
 
 const Field = styled.span`
-  color: #f9cc0b;
+  color: var(--app-gold-color);
   font-weight: bold;
   font-size: 16px;
 `;

@@ -7,7 +7,7 @@ export const Lists = () => {
 const ListsContainer = styled.div`
   padding: 0px 10px;
   width: 100%;
-  color: #f9cc0b;
+  color: var(--app-gold-color);
   display: flex;
   justify-content: center;
   font-size: 45px;

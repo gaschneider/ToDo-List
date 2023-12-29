@@ -5,6 +5,7 @@ import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
 import { TasksList } from "shared/types/TasksList";
 import { useLoaderData } from "react-router-dom";
 import { OneEightyRingWithBg } from "react-svg-spinners";
+import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
@@ -23,7 +24,7 @@ export const TasksListDetails: React.FC = () => {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksListDetailContainer>
-          <OneEightyRingWithBg color="#f9cc0b" width={150} height={150} />
+          <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
         </TasksListDetailContainer>
       </MainContainerTemplate>
     );
@@ -39,7 +40,7 @@ export const TasksListDetails: React.FC = () => {
 const TasksListDetailContainer = styled.div`
   padding: 0px 10px;
   width: 100%;
-  color: #f9cc0b;
+  color: var(--app-gold-color);
   display: flex;
   justify-content: center;
   align-items: center;

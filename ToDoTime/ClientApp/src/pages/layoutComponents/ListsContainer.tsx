@@ -6,12 +6,12 @@ import { NoListFound } from "./NoListFound";
 import { useEffect, useMemo, useState } from "react";
 import { OneEightyRingWithBg } from "react-svg-spinners";
 import { LeftSidebarItem } from "shared/components/LeftSidebarItem";
+import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 
 interface ListsContainerProps {
   isSidebarExpanded: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpanded }) => {
   const [tasksLists, setTasksList] = useState<TasksList[]>();
   const getTasksLists = useGetTasksLists();
@@ -22,7 +22,7 @@ export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpande
 
   const containerContent = useMemo(() => {
     if (!tasksLists) {
-      return <OneEightyRingWithBg color="#fff" width={20} height={20} />;
+      return <OneEightyRingWithBg color={APP_GOLD_COLOR} width={20} height={20} />;
     }
 
     return tasksLists.length > 0 ? (
@@ -55,6 +55,8 @@ const Container = styled.div<{ isSidebarExpanded: boolean }>`
   height: 100%;
   overflow-y: overlay;
   overflow-x: hidden;
+
+  // TODO Issue #5: Review scrollbar style
   scrollbar-gutter: true;
 
   &::-webkit-scrollbar {
@@ -78,7 +80,7 @@ const Container = styled.div<{ isSidebarExpanded: boolean }>`
 `;
 
 const ListsContainerTitle = styled.span`
-  color: #f9cc0b;
+  color: var(--app-gold-color);
   font-size: 16px;
   font-weight: bold;
   text-align: center;

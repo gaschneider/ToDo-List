@@ -5,6 +5,7 @@ import logo from "../../assets/logo.svg";
 import { css } from "@emotion/react";
 import { DynamicIcon } from "shared/DynamicIcon";
 import { AvailableIconsEnum } from "shared/availableIcons";
+import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 
 interface AppTitleContainerProps {
   isSidebarExpanded: boolean;
@@ -28,7 +29,7 @@ export const AppTitleContainer: React.FC<AppTitleContainerProps> = ({
     >
       <DynamicIcon
         nameIcon={AvailableIconsEnum.BiMenu}
-        propsIcon={{ color: "#f9cc0b", size: 45 }}
+        propsIcon={{ color: APP_GOLD_COLOR, size: 45 }}
       />
     </IconContainer>
   );
@@ -90,7 +91,7 @@ const appTitleContainerStyle = ({ isSidebarExpanded }: AppTitleContainerStylePar
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #f9cc0b;
+    border-bottom: 1px solid var(--app-gold-color);
     height: 100%;
   `;
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { DynamicIcon } from "shared/DynamicIcon";
 import { AvailableIconsEnum } from "shared/availableIcons";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 
 interface LeftSidebarItemProps {
   isSidebarExpanded: boolean;
@@ -40,7 +41,7 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
           padding: "6px 10px",
           lineHeight: "20px",
           borderRadius: "8px",
-          color: "#f9cc0b",
+          color: APP_GOLD_COLOR,
           zIndex: 10000
         }}
       />
@@ -49,7 +50,7 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
 };
 
 const ListItem = styled.span<{ isSidebarExpanded: boolean }>`
-  color: #f9cc0b;
+  color: var(--app-gold-color);
   width: ${(props) => (props.isSidebarExpanded ? "200px" : "fit-content")};
   text-align: center;
   padding: 6px;

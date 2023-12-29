@@ -7,7 +7,6 @@ interface AddNewListButtonProps {
   isSidebarExpanded: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const AddNewListButton: React.FC<AddNewListButtonProps> = ({ isSidebarExpanded }) => {
   return (
     <Container isSidebarExpanded={isSidebarExpanded}>
@@ -28,7 +27,7 @@ const Container = styled.div<{ isSidebarExpanded: boolean }>`
   align-items: center;
   flex-direction: column;
   padding: ${(props) => (props.isSidebarExpanded ? "10px 15px 10px" : "10px 5px 10px")};
-  border-top: 1px solid #f9cc0b;
+  border-top: 1px solid var(--app-gold-color);
   width: -webkit-fill-available;
   height: 50px;
 `;

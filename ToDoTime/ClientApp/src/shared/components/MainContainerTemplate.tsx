@@ -30,12 +30,12 @@ const Container = styled.div`
 
 const ContainerTitle = styled.span`
   font-size: 20px;
-  color: #f9cc0b;
+  color: var(--app-gold-color);
   font-weight: bold;
   display: flex;
   justify-content: center;
   padding: 5px;
-  border-bottom: 1px solid #f9cc0b;
+  border-bottom: 1px solid var(--app-gold-color);
   height: 35px;
 `;
 
