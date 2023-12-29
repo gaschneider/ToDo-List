@@ -1,27 +1,54 @@
-import React from "react";
-import logo from "./logo.svg";
-import styles from "./App.module.scss";
-import styled from "@emotion/styled";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Layout } from "pages/Layout";
+import { Home } from "pages/home/Home";
+import {
+  homeRoute,
+  listsRoute,
+  newListRoute,
+  routes,
+  taskDetailRoute,
+  tasksListDetailsRoute
+} from "routes";
+import { NewList } from "pages/newList/NewList";
+import { ErrorPage } from "pages/ErrorPage";
+import { TaskDetail } from "pages/TaskDetail";
+import { Lists } from "pages/Lists";
+import { TasksListDetails } from "pages/TasksListDetails";
+import { tasksListDetailsLoader } from "pages/routesLoader/tasksListDetailsLoader";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: routes[homeRoute],
+        element: <Home />
+      },
+      {
+        path: routes[newListRoute],
+        element: <NewList />
+      },
+      {
+        path: routes[listsRoute],
+        element: <Lists />
+      },
+      {
+        path: routes[taskDetailRoute],
+        element: <TaskDetail />
+      },
+      {
+        path: routes[tasksListDetailsRoute],
+        element: <TasksListDetails />,
+        loader: tasksListDetailsLoader
+      }
+    ]
+  }
+]);
 
 const App = () => {
-  return (
-    <div className={styles["App"]}>
-      <header className={styles["App-header"]}>
-        <img src={logo} className={styles["App-logo"]} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className={styles["App-link"]}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          To-Do List App by Gabriel Schneider
-        </a>
-      </header>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
