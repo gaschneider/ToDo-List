@@ -38,10 +38,11 @@ export const NewList = () => {
           </ValueWrapper>
           <ErrorMessageSpan>{errorMessages?.invalidIcon}</ErrorMessageSpan>
         </Value>
-        <Field>Description</Field>
+        <Field>
+          Description <Optional>(optional)</Optional>
+        </Field>
         <Value>
           <TextArea {...descriptionAreaProps} />
-          <ErrorMessageSpan>{errorMessages?.invalidDescription}</ErrorMessageSpan>
         </Value>
         <Value>
           <Button {...submitFormProps}>Create</Button>
@@ -99,4 +100,8 @@ const ValueWrapper = styled.div`
 const ErrorMessageSpan = styled.span`
   margin-left: 5px;
   color: #fc7a00;
+`;
+
+const Optional = styled.span`
+  font-size: 9px;
 `;

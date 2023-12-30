@@ -20,7 +20,6 @@ type IconOptionType = {
 type NewListFormErrorMessagesType = {
   invalidName?: string;
   invalidIcon?: string;
-  invalidDescription?: string;
 };
 
 export const useNewListForm = () => {
@@ -30,7 +29,7 @@ export const useNewListForm = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [errorMessages, setErrorMessages] = useState<NewListFormErrorMessagesType>();
 
-  const fieldsChangedRef = useRef({ listName: false, listIcon: false, listDescription: false });
+  const fieldsChangedRef = useRef({ listName: false, listIcon: false });
 
   const validateForm = useCallback(() => {
     const newErrorMessages: NewListFormErrorMessagesType = {};
@@ -49,20 +48,13 @@ export const useNewListForm = () => {
       }
     }
 
-    if (fieldsChanged.listDescription) {
-      if ((listDescription?.length ?? 0) < 10) {
-        newErrorMessages.invalidDescription =
-          "Field description should have at least 10 characters.";
-      }
-    }
-
     setErrorMessages(newErrorMessages);
     if (Object.keys(newErrorMessages).length > 0) {
       return false;
     }
 
-    return fieldsChanged.listIcon && fieldsChanged.listDescription;
-  }, [listDescription?.length, listName.length, selectedIcon]);
+    return fieldsChanged.listIcon;
+  }, [listName.length, selectedIcon]);
 
   useEffect(() => {
     setIsFormValid(validateForm());
@@ -91,59 +83,73 @@ export const useNewListForm = () => {
     fieldsChangedRef.current.listName = true;
   }, []);
 
-  const nameInputProps = {
-    value: listName,
-    onChange: onChangeListName
-  };
+  const nameInputProps = useMemo(
+    () => ({
+      value: listName,
+      onChange: onChangeListName
+    }),
+    [listName, onChangeListName]
+  );
 
-  const iconSelectProps = {
-    value: selectedIcon,
-    onChange: (option: IconOptionType) => {
-      setSelectedIcon(option);
-      fieldsChangedRef.current.listIcon = true;
-    },
-    options,
-    formatOptionLabel: (option: IconOptionType) => {
-      return (
-        <IconOptionRendered>
-          <BoxCustomIcon
-            nameIcon={option.value}
-            propsIcon={{ size: 25, style: { marginRight: 10 } }}
-          />
-          {option.label}
-        </IconOptionRendered>
-      );
-    },
-    classNames: {
-      container: () => styles["new-list-icon-select-container"],
-      menu: () => styles["new-list-icon-select-menu"]
-    }
-  };
+  const iconSelectProps = useMemo(
+    () => ({
+      value: selectedIcon,
+      onChange: (option: IconOptionType) => {
+        setSelectedIcon(option);
+        fieldsChangedRef.current.listIcon = true;
+      },
+      options,
+      formatOptionLabel: (option: IconOptionType) => {
+        return (
+          <IconOptionRendered>
+            <BoxCustomIcon
+              nameIcon={option.value}
+              propsIcon={{ size: 25, style: { marginRight: 10 } }}
+            />
+            {option.label}
+          </IconOptionRendered>
+        );
+      },
+      classNames: {
+        container: () => styles["new-list-icon-select-container"],
+        menu: () => styles["new-list-icon-select-menu"]
+      }
+    }),
+    [options, selectedIcon]
+  );
 
   const onChangeListDescription: ChangeEventHandler<HTMLTextAreaElement> = useCallback((e) => {
     setListDescription(e.target.value);
-    fieldsChangedRef.current.listDescription = true;
   }, []);
 
-  const descriptionAreaProps = {
-    value: listDescription,
-    onChange: onChangeListDescription
-  };
+  const descriptionAreaProps = useMemo(
+    () => ({
+      value: listDescription,
+      onChange: onChangeListDescription
+    }),
+    [listDescription, onChangeListDescription]
+  );
 
   const onSubmit: MouseEventHandler<HTMLButtonElement> = () => {};
 
-  const submitFormProps = {
-    onClick: onSubmit,
-    disabled: !isFormValid
-  };
+  const submitFormProps = useMemo(
+    () => ({
+      onClick: onSubmit,
+      disabled: !isFormValid
+    }),
+    [isFormValid]
+  );
 
-  return {
-    nameInputProps,
-    iconSelectProps,
-    descriptionAreaProps,
-    submitFormProps,
-    errorMessages
-  };
+  return useMemo(
+    () => ({
+      nameInputProps,
+      iconSelectProps,
+      descriptionAreaProps,
+      submitFormProps,
+      errorMessages
+    }),
+    [descriptionAreaProps, errorMessages, iconSelectProps, nameInputProps, submitFormProps]
+  );
 };
 
 const IconOptionRendered = styled.div`
