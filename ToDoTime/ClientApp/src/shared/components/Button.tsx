@@ -11,7 +11,7 @@ export const Button = styled.button`
   font-weight: bold;
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 1);
 
-  :hover {
+  :hover:not(:disabled) {
     background-color: black;
     color: var(--app-gold-color);
     cursor: pointer;

@@ -1,4 +1,12 @@
-import { ChangeEventHandler, useCallback, useMemo, useState } from "react";
+import {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { AvailableIconsEnum } from "shared/availableIcons";
 import styles from "./NewList.module.scss";
 import styled from "@emotion/styled";
@@ -9,10 +17,56 @@ type IconOptionType = {
   label: string;
 };
 
+type NewListFormErrorMessagesType = {
+  invalidName?: string;
+  invalidIcon?: string;
+  invalidDescription?: string;
+};
+
 export const useNewListForm = () => {
   const [listName, setListName] = useState("My List");
   const [selectedIcon, setSelectedIcon] = useState<IconOptionType>();
   const [listDescription, setListDescription] = useState<string>();
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [errorMessages, setErrorMessages] = useState<NewListFormErrorMessagesType>();
+
+  const fieldsChangedRef = useRef({ listName: false, listIcon: false, listDescription: false });
+
+  const validateForm = useCallback(() => {
+    const newErrorMessages: NewListFormErrorMessagesType = {};
+    const fieldsChanged = fieldsChangedRef.current;
+    if (fieldsChanged.listName) {
+      if (listName.length < 5) {
+        newErrorMessages.invalidName = "Field name should have at least 5 characters.";
+      } else if (listName.length > 20) {
+        newErrorMessages.invalidName = "Field name should have up to 20 characters.";
+      }
+    }
+
+    if (fieldsChanged.listIcon) {
+      if (!selectedIcon) {
+        newErrorMessages.invalidIcon = "An icon must be selected.";
+      }
+    }
+
+    if (fieldsChanged.listDescription) {
+      if ((listDescription?.length ?? 0) < 10) {
+        newErrorMessages.invalidDescription =
+          "Field description should have at least 10 characters.";
+      }
+    }
+
+    setErrorMessages(newErrorMessages);
+    if (Object.keys(newErrorMessages).length > 0) {
+      return false;
+    }
+
+    return fieldsChanged.listIcon && fieldsChanged.listDescription;
+  }, [listDescription?.length, listName.length, selectedIcon]);
+
+  useEffect(() => {
+    setIsFormValid(validateForm());
+  }, [validateForm]);
 
   const options = useMemo(() => {
     const innerOptions: IconOptionType[] = [];
@@ -34,6 +88,7 @@ export const useNewListForm = () => {
 
   const onChangeListName: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setListName(e.target.value);
+    fieldsChangedRef.current.listName = true;
   }, []);
 
   const nameInputProps = {
@@ -45,6 +100,7 @@ export const useNewListForm = () => {
     value: selectedIcon,
     onChange: (option: IconOptionType) => {
       setSelectedIcon(option);
+      fieldsChangedRef.current.listIcon = true;
     },
     options,
     formatOptionLabel: (option: IconOptionType) => {
@@ -66,6 +122,7 @@ export const useNewListForm = () => {
 
   const onChangeListDescription: ChangeEventHandler<HTMLTextAreaElement> = useCallback((e) => {
     setListDescription(e.target.value);
+    fieldsChangedRef.current.listDescription = true;
   }, []);
 
   const descriptionAreaProps = {
@@ -73,10 +130,19 @@ export const useNewListForm = () => {
     onChange: onChangeListDescription
   };
 
+  const onSubmit: MouseEventHandler<HTMLButtonElement> = () => {};
+
+  const submitFormProps = {
+    onClick: onSubmit,
+    disabled: !isFormValid
+  };
+
   return {
     nameInputProps,
     iconSelectProps,
-    descriptionAreaProps
+    descriptionAreaProps,
+    submitFormProps,
+    errorMessages
   };
 };
 

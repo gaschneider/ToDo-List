@@ -11,7 +11,8 @@ import { TextArea } from "shared/components/TextArea";
 import { Button } from "shared/components/Button";
 
 export const NewList = () => {
-  const { nameInputProps, iconSelectProps, descriptionAreaProps } = useNewListForm();
+  const { nameInputProps, iconSelectProps, descriptionAreaProps, submitFormProps, errorMessages } =
+    useNewListForm();
 
   return (
     <MainContainerTemplate title="New List">
@@ -19,26 +20,31 @@ export const NewList = () => {
         <Field>Name:</Field>
         <Value>
           <Input {...nameInputProps} />
+          <ErrorMessageSpan>{errorMessages?.invalidName}</ErrorMessageSpan>
         </Value>
 
         <Field>Icon</Field>
         <Value>
-          {/* Useful to check for the props on react-select-virtualized since the lib doesnt have types */}
-          {/* <Select /> */}
-          <ReactSelect {...iconSelectProps} />
-          {iconSelectProps.value && (
-            <BoxCustomIcon
-              nameIcon={iconSelectProps.value.value}
-              propsIcon={{ size: 35, color: APP_GOLD_COLOR, style: { marginLeft: 10 } }}
-            />
-          )}
+          <ValueWrapper>
+            {/* Useful to check for the props on react-select-virtualized since the lib doesnt have types */}
+            {/* <Select /> */}
+            <ReactSelect {...iconSelectProps} />
+            {iconSelectProps.value && (
+              <BoxCustomIcon
+                nameIcon={iconSelectProps.value.value}
+                propsIcon={{ size: 35, color: APP_GOLD_COLOR, style: { marginLeft: 10 } }}
+              />
+            )}
+          </ValueWrapper>
+          <ErrorMessageSpan>{errorMessages?.invalidIcon}</ErrorMessageSpan>
         </Value>
         <Field>Description</Field>
         <Value>
           <TextArea {...descriptionAreaProps} />
+          <ErrorMessageSpan>{errorMessages?.invalidDescription}</ErrorMessageSpan>
         </Value>
         <Value>
-          <Button>Create</Button>
+          <Button {...submitFormProps}>Create</Button>
         </Value>
       </FormGrid>
     </MainContainerTemplate>
@@ -49,7 +55,6 @@ const FormGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: max-content;
-  align-items: center;
   height: 100%;
 
   @media (min-width: 600px) {
@@ -81,4 +86,17 @@ const Value = styled.div`
   @media (min-width: 600px) {
     grid-column: 2;
   }
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 20px;
+`;
+
+const ValueWrapper = styled.div`
+  display: flex;
+`;
+
+const ErrorMessageSpan = styled.span`
+  margin-left: 5px;
+  color: #fc7a00;
 `;
