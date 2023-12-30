@@ -1,80 +1,44 @@
 import styled from "@emotion/styled";
-import { useMemo, useState } from "react";
 // Useful to check for the props on react-select-virtualized since the lib doesnt have types
 // import Select from "react-select";
 import ReactSelect from "react-select-virtualized";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
-import { AvailableIconsEnum } from "shared/availableIcons";
 import { Input } from "shared/components/Input";
 import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
-import styles from "./NewList.module.scss";
-
-interface IIconOption {
-  value: string;
-  label: string;
-}
+import { useNewListForm } from "./useNewListForm";
+import { TextArea } from "shared/components/TextArea";
+import { Button } from "shared/components/Button";
 
 export const NewList = () => {
-  const [selectedIcon, setSelectedIcon] = useState<IIconOption>();
-  const options = useMemo(() => {
-    const innerOptions: IIconOption[] = [];
-    Object.keys(AvailableIconsEnum).forEach((k) => {
-      // Remove the first two characters
-      const trimmedString = k.slice(2);
-
-      // Split the string whenever an uppercase letter is found
-      const formattedString = trimmedString.replace(/([A-Z])/g, " $1");
-
-      innerOptions.push({
-        value: k,
-        label: formattedString.trim()
-      });
-    });
-
-    return innerOptions;
-  }, []);
+  const { nameInputProps, iconSelectProps, descriptionAreaProps } = useNewListForm();
 
   return (
     <MainContainerTemplate title="New List">
       <FormGrid>
         <Field>Name:</Field>
         <Value>
-          <Input />
+          <Input {...nameInputProps} />
         </Value>
 
         <Field>Icon</Field>
         <Value>
           {/* Useful to check for the props on react-select-virtualized since the lib doesnt have types */}
           {/* <Select /> */}
-          <ReactSelect
-            value={selectedIcon}
-            onChange={(option: IIconOption) => {
-              setSelectedIcon(option);
-            }}
-            options={options}
-            formatOptionLabel={(option: IIconOption) => {
-              return (
-                <IconOptionRendered>
-                  <BoxCustomIcon
-                    nameIcon={option.value}
-                    propsIcon={{ size: 25, style: { marginRight: 10 } }}
-                  />
-                  {option.label}
-                </IconOptionRendered>
-              );
-            }}
-            classNames={{
-              container: () => styles["new-list-icon-select-container"],
-              menu: () => styles["new-list-icon-select-menu"]
-            }}
-          />
-          {selectedIcon && (
+          <ReactSelect {...iconSelectProps} />
+          {iconSelectProps.value && (
             <BoxCustomIcon
-              nameIcon={selectedIcon.value}
+              nameIcon={iconSelectProps.value.value}
               propsIcon={{ size: 35, color: APP_GOLD_COLOR, style: { marginLeft: 10 } }}
             />
           )}
+        </Value>
+        <Field>Description</Field>
+        <Value>
+          <TextArea {...descriptionAreaProps} />
+        </Value>
+        <Value>
+          <Button>Create</Button>
         </Value>
       </FormGrid>
     </MainContainerTemplate>
@@ -83,25 +47,38 @@ export const NewList = () => {
 
 const FormGrid = styled.div`
   display: grid;
-  grid-template-columns: 150px 1fr;
-  grid-template-rows: repeat(15, 1fr);
+  grid-template-columns: 1fr;
+  grid-auto-rows: max-content;
   align-items: center;
   height: 100%;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 150px 1fr;
+  }
 `;
 
 const Field = styled.span`
+  padding: 10px;
   color: var(--app-gold-color);
   font-weight: bold;
   font-size: 16px;
+  grid-column: 1;
+  text-align: center;
+
+  @media (min-width: 600px) {
+    text-align: unset;
+  }
 `;
 
 const Value = styled.div`
+  padding: 10px;
   width: 100%;
   max-width: 500px;
   display: flex;
-`;
+  max-height: 150px;
+  grid-column: 1;
 
-const IconOptionRendered = styled.div`
-  display: flex;
-  align-items: center;
+  @media (min-width: 600px) {
+    grid-column: 2;
+  }
 `;
