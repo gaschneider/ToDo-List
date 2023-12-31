@@ -6,5 +6,5 @@ export type TasksList = {
   name: string;
   description: string;
   icon: AvailableIconsEnum;
-  tasks: Task[];
+  tasks: Record<number, Task>;
 };

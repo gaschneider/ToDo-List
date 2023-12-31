@@ -24,7 +24,11 @@ export const TasksListDetails: React.FC = () => {
   return (
     <MainContainerTemplate title={tasksList.name}>
       <TasksListDetailContainer>Details on your list</TasksListDetailContainer>
-      {tasksList.tasks.length === 0 ? <NoTasks /> : <ListOfTasks tasks={tasksList.tasks} />}
+      {Object.keys(tasksList.tasks).length === 0 ? (
+        <NoTasks />
+      ) : (
+        <ListOfTasks tasks={tasksList.tasks} />
+      )}
     </MainContainerTemplate>
   );
 };
@@ -37,5 +41,4 @@ const TasksListDetailContainer = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 45px;
-  height: 100%;
 `;
