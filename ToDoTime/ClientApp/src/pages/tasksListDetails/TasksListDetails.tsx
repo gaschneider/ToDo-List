@@ -1,26 +1,17 @@
 import styled from "@emotion/styled";
-import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
-import { useEffect, useState } from "react";
 import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
-import { TasksList } from "shared/types/TasksList";
 import { useLoaderData } from "react-router-dom";
 import { OneEightyRingWithBg } from "react-svg-spinners";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
+import { useFetchTasksForList } from "./useFetchTasksForList";
+import { NoTasks } from "pages/layoutComponents/NoTasks";
+import { ListOfTasks } from "pages/layoutComponents/ListOfTasks";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
-  const getTasksListDetails = useGetTasksListDetails();
-  const [listDetails, setListDetails] = useState<TasksList>();
+  const tasksList = useFetchTasksForList(listId);
 
-  useEffect(() => {
-    // this triggers the spinner in the screen
-    setListDetails(undefined);
-    getTasksListDetails(listId).then((details) => {
-      setListDetails(details);
-    });
-  }, [getTasksListDetails, listId]);
-
-  if (!listDetails) {
+  if (!tasksList) {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksListDetailContainer>
@@ -31,8 +22,9 @@ export const TasksListDetails: React.FC = () => {
   }
 
   return (
-    <MainContainerTemplate title={listDetails.name}>
+    <MainContainerTemplate title={tasksList.name}>
       <TasksListDetailContainer>Details on your list</TasksListDetailContainer>
+      {tasksList.tasks.length === 0 ? <NoTasks /> : <ListOfTasks tasks={tasksList.tasks} />}
     </MainContainerTemplate>
   );
 };

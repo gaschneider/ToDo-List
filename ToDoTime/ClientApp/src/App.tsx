@@ -13,8 +13,8 @@ import { NewList } from "pages/newList/NewList";
 import { ErrorPage } from "pages/ErrorPage";
 import { TaskDetail } from "pages/TaskDetail";
 import { Lists } from "pages/Lists";
-import { TasksListDetails } from "pages/TasksListDetails";
-import { tasksListDetailsLoader } from "pages/routesLoader/tasksListDetailsLoader";
+import { TasksListDetails } from "pages/tasksListDetails/TasksListDetails";
+import { tasksListDetailsLoader } from "routesLoader/tasksListDetailsLoader";
 
 const router = createBrowserRouter([
   {
