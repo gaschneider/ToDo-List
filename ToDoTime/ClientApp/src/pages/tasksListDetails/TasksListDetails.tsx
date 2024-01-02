@@ -6,11 +6,13 @@ import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 import { useFetchTasksForList } from "./useFetchTasksForList";
 import { NoTasks } from "pages/layoutComponents/NoTasks";
 import { ListOfTasks } from "pages/layoutComponents/ListOfTasks";
-import { CreateNewTaskInline } from "shared/components/CreateNewTaskInline";
+import { CreateNewTaskInline } from "pages/layoutComponents/CreateNewTaskInline";
+import { useManageListOfTasks } from "./useManageListOfTasks";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
   const tasksList = useFetchTasksForList(listId);
+  const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
   if (!tasksList) {
     return (
@@ -26,15 +28,15 @@ export const TasksListDetails: React.FC = () => {
     <MainContainerTemplate title={tasksList.name}>
       <ContentWrapper>
         <TasksWrapper>
-          {Object.keys(tasksList.tasks).length === 0 ? (
+          {Object.keys(listOfTasks).length === 0 ? (
             <NoTasks />
           ) : (
-            <ListOfTasks tasks={tasksList.tasks} />
+            <ListOfTasks tasks={listOfTasks} toggleTaskDone={toggleTaskDone} />
           )}
         </TasksWrapper>
         <Footer>
           <Divider />
-          <CreateNewTaskInline onCreate={() => {}} />
+          <CreateNewTaskInline onCreate={onCreateTask} />
         </Footer>
       </ContentWrapper>
     </MainContainerTemplate>
@@ -51,8 +53,10 @@ const TasksWrapper = styled.div`
   display: grid;
   justify-content: center;
   padding: 10px;
-  grid-template-rows: max-content;
+  grid-auto-rows: max-content;
   gap: 20px;
+  max-height: 100%;
+  overflow: auto;
 `;
 
 const Divider = styled.hr`
