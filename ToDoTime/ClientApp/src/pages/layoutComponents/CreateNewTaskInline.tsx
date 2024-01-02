@@ -21,10 +21,16 @@ export const CreateNewTaskInline: React.FC<CreateNewTaskInlineProps> = ({ onCrea
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 150px 1fr 100px;
-  grid-template-rows: 1fr;
+  grid-template-rows: repeat(3, 30px);
+  grid-template-columns: 1fr;
   grid-gap: 20px;
-  align-items: center;
+  place-items: center;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 150px 1fr 100px;
+    grid-template-rows: 1fr;
+    align-items: center;
+  }
 `;
 
 const Field = styled.span`

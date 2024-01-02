@@ -13,7 +13,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, label, checked, onToggle
       <input type="checkbox" id={id} name="check" checked={checked} onClick={onToggle} />
       <label htmlFor={id}>
         <span></span>
-        {label}
+        <span className={styles.name}>{label}</span>
       </label>
     </div>
   );

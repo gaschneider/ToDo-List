@@ -11,8 +11,16 @@
   color: var(--app-gold-color);
   cursor: pointer;
   position: relative;
+  text-wrap: nowrap;
 }
-.checkbox label span {
+
+.checkbox label .name {
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+
+.checkbox label span:not(.name) {
   display: inline-block;
   position: relative;
   background-color: transparent;
@@ -27,7 +35,7 @@
     background-color 150ms 200ms,
     transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
 }
-.checkbox label span:before {
+.checkbox label span:not(.name):before {
   content: "";
   width: 0px;
   height: 2px;
@@ -40,7 +48,7 @@
   transition: width 50ms ease 50ms;
   transform-origin: 0% 0%;
 }
-.checkbox label span:after {
+.checkbox label span:not(.name):after {
   content: "";
   width: 0;
   height: 2px;
@@ -53,11 +61,11 @@
   transition: width 50ms ease;
   transform-origin: 0% 0%;
 }
-.checkbox label:hover span:before {
+.checkbox label:hover span:not(.name):before {
   width: 5px;
   transition: width 100ms ease;
 }
-.checkbox label:hover span:after {
+.checkbox label:hover span:not(.name):after {
   width: 10px;
   transition: width 150ms ease 100ms;
 }
@@ -65,30 +73,30 @@
 .checkbox input[type="checkbox"] {
   display: none;
 }
-.checkbox input[type="checkbox"]:checked + label span {
+.checkbox input[type="checkbox"]:checked + label span:not(.name) {
   background-color: black;
   transform: scale(1.25);
 }
-.checkbox input[type="checkbox"]:checked + label span:after {
+.checkbox input[type="checkbox"]:checked + label span:not(.name):after {
   width: 10px;
   background: #fff;
   transition: width 150ms ease 100ms;
 }
-.checkbox input[type="checkbox"]:checked + label span:before {
+.checkbox input[type="checkbox"]:checked + label span:not(.name):before {
   width: 5px;
   background: #fff;
   transition: width 150ms ease 100ms;
 }
-.checkbox input[type="checkbox"]:checked + label:hover span {
+.checkbox input[type="checkbox"]:checked + label:hover span:not(.name) {
   background-color: #333;
   transform: scale(1.25);
 }
-.checkbox input[type="checkbox"]:checked + label:hover span:after {
+.checkbox input[type="checkbox"]:checked + label:hover span:not(.name):after {
   width: 10px;
   background: #fff;
   transition: width 150ms ease 100ms;
 }
-.checkbox input[type="checkbox"]:checked + label:hover span:before {
+.checkbox input[type="checkbox"]:checked + label:hover span:not(.name):before {
   width: 5px;
   background: #fff;
   transition: width 150ms ease 100ms;

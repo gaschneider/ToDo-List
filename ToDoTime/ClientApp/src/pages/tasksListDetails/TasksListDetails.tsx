@@ -57,6 +57,8 @@ const TasksWrapper = styled.div`
   gap: 20px;
   max-height: 100%;
   overflow: auto;
+  grid-template-columns: 1fr;
+  place-items: center;
 `;
 
 const Divider = styled.hr`
