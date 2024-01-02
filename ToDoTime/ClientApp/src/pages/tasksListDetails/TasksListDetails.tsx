@@ -51,6 +51,8 @@ const TasksWrapper = styled.div`
   display: grid;
   justify-content: center;
   padding: 10px;
+  grid-template-rows: max-content;
+  gap: 20px;
 `;
 
 const Divider = styled.hr`

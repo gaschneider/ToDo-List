@@ -7,7 +7,10 @@ export const tasksListsMockData: TasksList[] = [
     name: "Workout list Workout list Workout list Workout list Workout list Workout list",
     description: "My personal workout list for weekdays",
     icon: AvailableIconsEnum.BiAbacus,
-    tasks: { 1: { id: 1, name: "pound from suppose", done: true } }
+    tasks: {
+      1: { id: 1, name: "pound from suppose", done: true },
+      2: { id: 2, name: "pound from suppose 2", done: false }
+    }
   },
   {
     id: 2,
