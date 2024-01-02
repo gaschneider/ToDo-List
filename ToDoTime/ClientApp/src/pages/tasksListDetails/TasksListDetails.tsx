@@ -6,6 +6,7 @@ import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 import { useFetchTasksForList } from "./useFetchTasksForList";
 import { NoTasks } from "pages/layoutComponents/NoTasks";
 import { ListOfTasks } from "pages/layoutComponents/ListOfTasks";
+import { CreateNewTaskInline } from "shared/components/CreateNewTaskInline";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
@@ -14,31 +15,48 @@ export const TasksListDetails: React.FC = () => {
   if (!tasksList) {
     return (
       <MainContainerTemplate title="Loading...">
-        <TasksListDetailContainer>
+        <TasksWrapper>
           <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
-        </TasksListDetailContainer>
+        </TasksWrapper>
       </MainContainerTemplate>
     );
   }
 
   return (
     <MainContainerTemplate title={tasksList.name}>
-      <TasksListDetailContainer>Details on your list</TasksListDetailContainer>
-      {Object.keys(tasksList.tasks).length === 0 ? (
-        <NoTasks />
-      ) : (
-        <ListOfTasks tasks={tasksList.tasks} />
-      )}
+      <ContentWrapper>
+        <TasksWrapper>
+          {Object.keys(tasksList.tasks).length === 0 ? (
+            <NoTasks />
+          ) : (
+            <ListOfTasks tasks={tasksList.tasks} />
+          )}
+        </TasksWrapper>
+        <Footer>
+          <Divider />
+          <CreateNewTaskInline onCreate={() => {}} />
+        </Footer>
+      </ContentWrapper>
     </MainContainerTemplate>
   );
 };
 
-const TasksListDetailContainer = styled.div`
-  padding: 0px 10px;
-  width: 100%;
-  color: var(--app-gold-color);
-  display: flex;
+const ContentWrapper = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 50px;
+  height: 100%;
+`;
+
+const TasksWrapper = styled.div`
+  display: grid;
   justify-content: center;
-  align-items: center;
-  font-size: 45px;
+  padding: 10px;
+`;
+
+const Divider = styled.hr`
+  border-color: var(--app-gold-color);
+`;
+
+const Footer = styled.div`
+  padding: 3px;
 `;

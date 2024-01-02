@@ -6,7 +6,7 @@ export const useGetTasksListDetails = () => {
   return useCallback((listId: number) => {
     // using this to simulate async call to backend
     return new Promise<TasksList | undefined>((resolve) =>
-      setTimeout(() => resolve(tasksListsMockData.find((tl) => tl.id === listId)), 5000)
+      setTimeout(() => resolve(tasksListsMockData.find((tl) => tl.id === listId)), 0)
     );
   }, []);
 };
