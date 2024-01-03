@@ -18,6 +18,16 @@
   overflow: hidden;
   text-wrap: nowrap;
   text-overflow: ellipsis;
+  position: relative;
+}
+
+.checkbox input[type="checkbox"]:checked + label .name:after {
+  border-top: 1px solid var(--app-gold-color);
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 65%;
+  left: 0;
 }
 
 .checkbox label span:not(.name) {

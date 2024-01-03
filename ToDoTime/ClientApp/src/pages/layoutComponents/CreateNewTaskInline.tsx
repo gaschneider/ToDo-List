@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "../../shared/components/Button";
 import { Input } from "../../shared/components/Input";
-import { useState } from "react";
+import { KeyboardEventHandler, useCallback, useState } from "react";
 
 type CreateNewTaskInlineProps = {
   onCreate: (name: string) => void;
@@ -10,10 +10,23 @@ type CreateNewTaskInlineProps = {
 export const CreateNewTaskInline: React.FC<CreateNewTaskInlineProps> = ({ onCreate }) => {
   const [newTaskName, setNewTaskName] = useState("My new task");
 
+  const handlesEnter: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      if (e.code === "Enter") {
+        onCreate(newTaskName);
+      }
+    },
+    [newTaskName, onCreate]
+  );
+
   return (
     <Wrapper>
       <Field>New task name: </Field>
-      <Input value={newTaskName} onChange={(e) => setNewTaskName(e.target.value)} />
+      <Input
+        value={newTaskName}
+        onChange={(e) => setNewTaskName(e.target.value)}
+        onKeyDown={handlesEnter}
+      />
       <Button onClick={() => onCreate(newTaskName)}>Create</Button>
     </Wrapper>
   );
