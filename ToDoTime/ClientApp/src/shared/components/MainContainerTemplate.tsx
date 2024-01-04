@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { PropsWithChildren } from "react";
 
 interface MainContainerTemplateProps {
-  title: string;
+  title?: React.ReactNode;
 }
 
 export const MainContainerTemplate: React.FC<PropsWithChildren<MainContainerTemplateProps>> = ({

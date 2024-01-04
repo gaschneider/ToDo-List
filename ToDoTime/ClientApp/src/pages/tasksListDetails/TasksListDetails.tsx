@@ -8,10 +8,13 @@ import { NoTasks } from "pages/layoutComponents/NoTasks";
 import { ListOfTasks } from "pages/layoutComponents/ListOfTasks";
 import { CreateNewTaskInline } from "pages/layoutComponents/CreateNewTaskInline";
 import { useManageListOfTasks } from "./useManageListOfTasks";
+import { useManageTasksList } from "./useManageTasksList";
+import { EditableDescription } from "pages/layoutComponents/EditableDescription";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
   const tasksList = useFetchTasksForList(listId);
+  const { taskListDescription, taskListName, setDescription } = useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
   if (!tasksList) {
@@ -25,9 +28,12 @@ export const TasksListDetails: React.FC = () => {
   }
 
   return (
-    <MainContainerTemplate title={tasksList.name}>
+    <MainContainerTemplate title={taskListName}>
       <ContentWrapper>
-        <DescriptionContainer>{tasksList.description}</DescriptionContainer>
+        <EditableDescription
+          taskListDescription={taskListDescription}
+          onSetDescription={setDescription}
+        />
         <TasksWrapper>
           {Object.keys(listOfTasks).length === 0 ? (
             <NoTasks />
@@ -48,12 +54,6 @@ const ContentWrapper = styled.div`
   display: grid;
   grid-template-rows: 100px 1fr 50px;
   height: 100%;
-`;
-
-const DescriptionContainer = styled.div`
-  color: var(--app-gold-color);
-  display: grid;
-  place-items: center;
 `;
 
 const TasksWrapper = styled.div`

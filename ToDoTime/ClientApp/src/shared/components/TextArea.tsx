@@ -5,5 +5,6 @@ export const TextArea = styled.textarea`
   border-radius: 6px;
   resize: none;
   height: 100px;
+  max-height: calc(100% - 20px);
   padding: 10px;
 `;
