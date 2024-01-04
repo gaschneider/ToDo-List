@@ -27,6 +27,7 @@ export const TasksListDetails: React.FC = () => {
   return (
     <MainContainerTemplate title={tasksList.name}>
       <ContentWrapper>
+        <DescriptionContainer>{tasksList.description}</DescriptionContainer>
         <TasksWrapper>
           {Object.keys(listOfTasks).length === 0 ? (
             <NoTasks />
@@ -45,8 +46,14 @@ export const TasksListDetails: React.FC = () => {
 
 const ContentWrapper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 50px;
+  grid-template-rows: 100px 1fr 50px;
   height: 100%;
+`;
+
+const DescriptionContainer = styled.div`
+  color: var(--app-gold-color);
+  display: grid;
+  place-items: center;
 `;
 
 const TasksWrapper = styled.div`
