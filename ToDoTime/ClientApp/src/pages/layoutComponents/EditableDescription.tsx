@@ -25,11 +25,13 @@ export const EditableDescription: React.FC<EditableDescriptionProps> = ({
         <TextArea
           value={editedDescription}
           onChange={(e) => setEditedDescription(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.code === "Enter") {
-              onSetDescription(editedDescription);
-              setIsEditing(false);
-            }
+          onConfirm={() => {
+            onSetDescription(editedDescription);
+            setIsEditing(false);
+          }}
+          onCancel={() => {
+            setEditedDescription(taskListDescription);
+            setIsEditing(false);
           }}
         />
       </TextAreaContainer>
