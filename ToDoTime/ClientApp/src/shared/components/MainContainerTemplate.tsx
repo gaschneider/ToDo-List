@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { PropsWithChildren } from "react";
 
 interface MainContainerTemplateProps {
-  title: string;
+  title?: React.ReactNode;
 }
 
 export const MainContainerTemplate: React.FC<PropsWithChildren<MainContainerTemplateProps>> = ({
@@ -32,11 +32,13 @@ const ContainerTitle = styled.span`
   font-size: 20px;
   color: var(--app-gold-color);
   font-weight: bold;
-  display: flex;
-  justify-content: center;
+  text-align: center;
   padding: 5px;
   border-bottom: 1px solid var(--app-gold-color);
   height: 35px;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
 `;
 
 const ContainerContent = styled.div`

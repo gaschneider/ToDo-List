@@ -11,6 +11,7 @@ import { AvailableIconsEnum } from "shared/availableIcons";
 import styles from "./NewList.module.scss";
 import styled from "@emotion/styled";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
+import { validateListName } from "shared/helpers/validations";
 
 type IconOptionType = {
   value: string;
@@ -35,10 +36,9 @@ export const useNewListForm = () => {
     const newErrorMessages: NewListFormErrorMessagesType = {};
     const fieldsChanged = fieldsChangedRef.current;
     if (fieldsChanged.listName) {
-      if (listName.length < 5) {
-        newErrorMessages.invalidName = "Field name should have at least 5 characters.";
-      } else if (listName.length > 20) {
-        newErrorMessages.invalidName = "Field name should have up to 20 characters.";
+      const result = validateListName(listName);
+      if (!result.isValid) {
+        newErrorMessages.invalidName = result.message;
       }
     }
 
@@ -54,7 +54,7 @@ export const useNewListForm = () => {
     }
 
     return fieldsChanged.listIcon;
-  }, [listName.length, selectedIcon]);
+  }, [listName, selectedIcon]);
 
   useEffect(() => {
     setIsFormValid(validateForm());
