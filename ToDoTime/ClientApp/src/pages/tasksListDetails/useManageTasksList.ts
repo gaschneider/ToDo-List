@@ -1,11 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { validateListName } from "shared/helpers/validations";
 import { TasksList } from "shared/types/TasksList";
 
 type UseManageTasksListHook = (tasksList?: TasksList) => {
   taskListDescription?: string;
   taskListName?: string;
   setDescription: Dispatch<SetStateAction<string | undefined>>;
-  setName: Dispatch<SetStateAction<string | undefined>>;
+  onSetName: (name: string) => boolean;
 };
 
 export const useManageTasksList: UseManageTasksListHook = (tasksList) => {
@@ -24,10 +25,19 @@ export const useManageTasksList: UseManageTasksListHook = (tasksList) => {
     }
   }, [tasksList?.name]);
 
+  const onSetName = useCallback((name: string) => {
+    const { isValid } = validateListName(name);
+    if (isValid) {
+      setName(name);
+    }
+
+    return isValid;
+  }, []);
+
   return {
     taskListDescription: description,
     taskListName: name,
-    setName,
+    onSetName,
     setDescription
   };
 };

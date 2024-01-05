@@ -10,14 +10,16 @@ import { CreateNewTaskInline } from "pages/layoutComponents/CreateNewTaskInline"
 import { useManageListOfTasks } from "./useManageListOfTasks";
 import { useManageTasksList } from "./useManageTasksList";
 import { EditableDescription } from "pages/layoutComponents/EditableDescription";
+import { EditableInput } from "shared/components/EditableInput";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
   const tasksList = useFetchTasksForList(listId);
-  const { taskListDescription, taskListName, setDescription } = useManageTasksList(tasksList);
+  const { taskListDescription, taskListName, setDescription, onSetName } =
+    useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
-  if (!tasksList) {
+  if (!tasksList || !taskListDescription || !taskListName) {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksWrapper>
@@ -28,7 +30,7 @@ export const TasksListDetails: React.FC = () => {
   }
 
   return (
-    <MainContainerTemplate title={taskListName}>
+    <MainContainerTemplate title={<EditableInput value={taskListName} onChange={onSetName} />}>
       <ContentWrapper>
         <EditableDescription
           taskListDescription={taskListDescription}
