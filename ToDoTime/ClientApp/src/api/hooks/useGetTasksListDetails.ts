@@ -8,6 +8,8 @@ export const useGetTasksListDetails = (listId: number) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (listId <= 0) return;
+
     axios
       .get(`https://localhost:44368/TasksLists/Get?tasksListId=${listId}`)
       .then((res) => {

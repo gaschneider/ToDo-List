@@ -19,7 +19,7 @@ export const TasksListDetails: React.FC = () => {
     useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
-  if (isLoading || !tasksList || !taskListDescription || !taskListName) {
+  if (isLoading || !listOfTasks || !taskListDescription || !taskListName) {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksWrapper>
