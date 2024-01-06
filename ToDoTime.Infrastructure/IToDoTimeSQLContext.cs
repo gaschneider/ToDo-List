@@ -6,5 +6,6 @@ namespace ToDoTime.Infrastructure
     public interface IToDoTimeSQLContext
     {
         public DbSet<TasksList> TasksLists { get; set; }
+        public DbSet<Domain.Entities.Task> Tasks { get; set; }
     }
 }
