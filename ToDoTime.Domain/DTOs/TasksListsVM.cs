@@ -1,15 +1,15 @@
 ﻿using ToDoTime.Domain.Entities;
 
-namespace ToDoTime.Application.Queries.TasksLists
+namespace ToDoTime.Domain.DTOs
 {
-    public class TasksListsVM
+    public class TasksListVM
     {
         public int Id { get; set; }
         public string Name { get; set; } = "My list";
         public string Description { get; set; } = "";
         public string Icon { get; set; }
         public Dictionary<int, TaskVM> Tasks { get; } = new Dictionary<int, TaskVM>();
-        public TasksListsVM(TasksList tasksList)
+        public TasksListVM(TasksList tasksList)
         {
             Id = tasksList.Id;
             Name = tasksList.Name;

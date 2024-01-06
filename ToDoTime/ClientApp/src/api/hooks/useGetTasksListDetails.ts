@@ -1,12 +1,29 @@
-import { tasksListsMockData } from "mockData/TasksListData";
-import { useCallback } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { TasksList } from "shared/types/TasksList";
 
-export const useGetTasksListDetails = () => {
-  return useCallback((listId: number) => {
-    // using this to simulate async call to backend
-    return new Promise<TasksList | undefined>((resolve) =>
-      setTimeout(() => resolve(tasksListsMockData.find((tl) => tl.id === listId)), 0)
-    );
-  }, []);
+export const useGetTasksListDetails = (listId: number) => {
+  const [tasksList, setTasksList] = useState<TasksList>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:44368/TasksLists/Get?tasksListId=${listId}`)
+      .then((res) => {
+        setTasksList(res.data);
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [listId]);
+
+  return {
+    tasksList,
+    isLoading,
+    error
+  };
 };

@@ -18,5 +18,15 @@ namespace ToDoTime.Controllers
             var tasksLists = await _mediator.Send(new GetAllTasksListsQuery());
             return Ok(tasksLists);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] int tasksListId)
+        {
+            var tasksList = await _mediator.Send(new GetTasksListQuery()
+            {
+                TasksListId = tasksListId
+            });
+            return Ok(tasksList);
+        }
     }
 }

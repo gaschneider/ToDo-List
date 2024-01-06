@@ -3,7 +3,6 @@ import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
 import { useLoaderData } from "react-router-dom";
 import { OneEightyRingWithBg } from "react-svg-spinners";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
-import { useFetchTasksForList } from "./useFetchTasksForList";
 import { NoTasks } from "pages/layoutComponents/NoTasks";
 import { ListOfTasks } from "pages/layoutComponents/ListOfTasks";
 import { CreateNewTaskInline } from "pages/layoutComponents/CreateNewTaskInline";
@@ -11,15 +10,16 @@ import { useManageListOfTasks } from "./useManageListOfTasks";
 import { useManageTasksList } from "./useManageTasksList";
 import { EditableDescription } from "pages/layoutComponents/EditableDescription";
 import { EditableInput } from "shared/components/EditableInput";
+import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
-  const tasksList = useFetchTasksForList(listId);
+  const { tasksList, isLoading } = useGetTasksListDetails(listId);
   const { taskListDescription, taskListName, setDescription, onSetName } =
     useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
-  if (!tasksList || !taskListDescription || !taskListName) {
+  if (isLoading || !tasksList || !taskListDescription || !taskListName) {
     return (
       <MainContainerTemplate title="Loading...">
         <TasksWrapper>

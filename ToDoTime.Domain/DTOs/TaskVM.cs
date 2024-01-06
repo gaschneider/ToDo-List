@@ -1,4 +1,4 @@
-﻿namespace ToDoTime.Application.Queries.TasksLists
+﻿namespace ToDoTime.Domain.DTOs
 {
     public class TaskVM
     {
