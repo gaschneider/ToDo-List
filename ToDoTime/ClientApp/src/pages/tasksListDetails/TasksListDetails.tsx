@@ -30,9 +30,12 @@ export const TasksListDetails: React.FC = () => {
   }
 
   return (
-    <MainContainerTemplate title={<EditableInput value={taskListName} onChange={onSetName} />}>
+    <MainContainerTemplate
+      title={<EditableInput key={listId} value={taskListName} onChange={onSetName} />}
+    >
       <ContentWrapper>
         <EditableDescription
+          key={listId}
           taskListDescription={taskListDescription}
           onSetDescription={setDescription}
         />
