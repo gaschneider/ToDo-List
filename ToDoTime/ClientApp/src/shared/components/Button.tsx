@@ -3,8 +3,7 @@ import styled from "@emotion/styled";
 export const Button = styled.button`
   background-color: var(--app-gold-color);
   border-radius: 10px;
-  height: 40px;
-  padding: 10px;
+  height: 30px;
   min-width: fit-content;
   width: 100px;
   font-size: 18px;

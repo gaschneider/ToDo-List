@@ -3,7 +3,7 @@ import { useGetTasksLists } from "api/hooks/useGetTasksLists";
 import { routes, tasksListDetailsRoute } from "routes";
 import { TasksList } from "shared/types/TasksList";
 import { NoListFound } from "./NoListFound";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { OneEightyRingWithBg } from "react-svg-spinners";
 import { LeftSidebarItem } from "shared/components/LeftSidebarItem";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
@@ -13,16 +13,15 @@ interface ListsContainerProps {
 }
 
 export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpanded }) => {
-  const [tasksLists, setTasksList] = useState<TasksList[]>();
-  const getTasksLists = useGetTasksLists();
-
-  useEffect(() => {
-    getTasksLists().then((lists) => setTasksList(lists));
-  }, [getTasksLists]);
+  const { tasksLists, isLoading, errorMessage } = useGetTasksLists();
 
   const containerContent = useMemo(() => {
-    if (!tasksLists) {
+    if (isLoading) {
       return <OneEightyRingWithBg color={APP_GOLD_COLOR} width={20} height={20} />;
+    }
+
+    if (errorMessage) {
+      return <ErrorContainer>{errorMessage}</ErrorContainer>;
     }
 
     return tasksLists.length > 0 ? (
@@ -34,7 +33,7 @@ export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpande
     ) : (
       <NoListFound />
     );
-  }, [isSidebarExpanded, tasksLists]);
+  }, [errorMessage, isLoading, isSidebarExpanded, tasksLists]);
 
   return (
     <>
@@ -77,6 +76,12 @@ const Container = styled.div<{ isSidebarExpanded: boolean }>`
   &::-webkit-scrollbar-thumb {
     display: none;
   }
+`;
+
+const ErrorContainer = styled.div`
+  width: 200px;
+  color: var(--app-gold-color);
+  text-align: center;
 `;
 
 const ListsContainerTitle = styled.span`

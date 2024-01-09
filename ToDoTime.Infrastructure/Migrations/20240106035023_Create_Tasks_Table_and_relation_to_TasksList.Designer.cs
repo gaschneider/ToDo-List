@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoTime.Infrastructure;
 
@@ -11,9 +12,11 @@ using ToDoTime.Infrastructure;
 namespace ToDoTime.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoTimeSQLContext))]
-    partial class ToDoTimeSQLContextModelSnapshot : ModelSnapshot
+    [Migration("20240106035023_Create_Tasks_Table_and_relation_to_TasksList")]
+    partial class Create_Tasks_Table_and_relation_to_TasksList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

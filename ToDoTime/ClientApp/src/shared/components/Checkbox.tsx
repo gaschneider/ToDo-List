@@ -10,7 +10,7 @@ type CheckboxProps = {
 export const Checkbox: React.FC<CheckboxProps> = ({ id, label, checked, onToggle }) => {
   return (
     <div className={styles.checkbox}>
-      <input type="checkbox" id={id} name="check" checked={checked} onClick={onToggle} />
+      <input type="checkbox" id={id} name="check" checked={checked} onChange={onToggle} />
       <label htmlFor={id}>
         <span></span>
         <span className={styles.name}>{label}</span>

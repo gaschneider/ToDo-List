@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ToDoTime.Application.Queries.TasksLists;
+using ToDoTime.Domain.Exceptions;
 
 namespace ToDoTime.Controllers
 {
@@ -17,6 +18,24 @@ namespace ToDoTime.Controllers
         {
             var tasksLists = await _mediator.Send(new GetAllTasksListsQuery());
             return Ok(tasksLists);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTasksList([FromQuery] int tasksListId)
+        {
+            try
+            {
+                var tasksList = await _mediator.Send(new GetTasksListQuery()
+                {
+                    TasksListId = tasksListId
+                });
+
+                return Ok(tasksList);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -5,12 +5,12 @@ type UseManageListOfTasksSignature = (
   tasks?: Record<number, Task>,
   onToggleTask?: (id: number, isDone: boolean) => void
 ) => {
-  listOfTasks: Record<number, Task>;
+  listOfTasks?: Record<number, Task>;
   toggleTaskDone: (id: number) => void;
   onCreateTask: (newName: string) => void;
 };
 
-export const useManageListOfTasks: UseManageListOfTasksSignature = (tasks = {}, onToggleTask) => {
+export const useManageListOfTasks: UseManageListOfTasksSignature = (tasks, onToggleTask) => {
   const [listOfTasks, setListOfTasks] = useState(tasks);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ export const useManageListOfTasks: UseManageListOfTasksSignature = (tasks = {}, 
 
   const onCreateTask = useCallback((newName: string) => {
     setListOfTasks((prev) => {
+      if (!prev) return prev;
       const sortedIds = Object.keys(prev).sort((a, b) => Number(a) - Number(b));
       const newId = Number(sortedIds[sortedIds.length - 1]) + 1;
 
