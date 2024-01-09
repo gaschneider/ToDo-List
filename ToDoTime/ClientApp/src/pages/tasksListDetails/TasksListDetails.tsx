@@ -14,16 +14,16 @@ import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
-  const { tasksList, isLoading } = useGetTasksListDetails(listId);
+  const { tasksList, isLoading, errorMessage } = useGetTasksListDetails(listId);
   const { taskListDescription, taskListName, setDescription, onSetName } =
     useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
   if (isLoading || !listOfTasks || !taskListDescription || !taskListName) {
     return (
-      <MainContainerTemplate title="Loading...">
+      <MainContainerTemplate title={errorMessage ? "Error loading" : "Loading..."}>
         <TasksWrapper>
-          <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
+          {errorMessage || <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />}
         </TasksWrapper>
       </MainContainerTemplate>
     );
@@ -71,6 +71,7 @@ const TasksWrapper = styled.div`
   overflow: auto;
   grid-template-columns: 1fr;
   place-items: center;
+  color: var(--app-gold-color);
 `;
 
 const Divider = styled.hr`

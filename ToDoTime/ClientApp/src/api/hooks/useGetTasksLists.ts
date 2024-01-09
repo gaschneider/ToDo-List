@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { TasksList } from "shared/types/TasksList";
 import axios from "axios";
+import { ENDPOINTS_URL } from "api/endpoints";
 
 export const useGetTasksLists = () => {
   const [tasksLists, setTasksLists] = useState<TasksList[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   useEffect(() => {
     axios
-      .get("https://localhost:44368/TasksLists/GetAll")
+      .get(ENDPOINTS_URL.getAllLists)
       .then((res) => {
         setTasksLists(res.data);
       })
-      .catch(() => {
-        setError(true);
+      .catch((error) => {
+        setErrorMessage(`${error.response.data.status} - ${error.response.data.title}`);
       })
       .finally(() => {
         setIsLoading(false);
@@ -24,6 +25,6 @@ export const useGetTasksLists = () => {
   return {
     tasksLists,
     isLoading,
-    error
+    errorMessage
   };
 };

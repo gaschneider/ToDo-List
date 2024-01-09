@@ -21,7 +21,7 @@ namespace ToDoTime.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] int tasksListId)
+        public async Task<IActionResult> GetTasksList([FromQuery] int tasksListId)
         {
             try
             {

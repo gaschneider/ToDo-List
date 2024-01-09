@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using ToDoTime.Application;
 using ToDoTime.Infrastructure;
 
@@ -32,12 +31,6 @@ namespace ToDoTime
 #pragma warning disable CS8603 // Possível retorno de referência nula.
             services.AddScoped<IToDoTimeSQLContext>(provider => provider.GetService<ToDoTimeSQLContext>());
 #pragma warning restore CS8603 // Possível retorno de referência nula.
-
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                options.JsonSerializerOptions.WriteIndented = true;
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

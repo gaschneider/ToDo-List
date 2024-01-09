@@ -13,11 +13,15 @@ interface ListsContainerProps {
 }
 
 export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpanded }) => {
-  const { tasksLists, isLoading } = useGetTasksLists();
+  const { tasksLists, isLoading, errorMessage } = useGetTasksLists();
 
   const containerContent = useMemo(() => {
     if (isLoading) {
       return <OneEightyRingWithBg color={APP_GOLD_COLOR} width={20} height={20} />;
+    }
+
+    if (errorMessage) {
+      return <ErrorContainer>{errorMessage}</ErrorContainer>;
     }
 
     return tasksLists.length > 0 ? (
@@ -29,7 +33,7 @@ export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpande
     ) : (
       <NoListFound />
     );
-  }, [isLoading, isSidebarExpanded, tasksLists]);
+  }, [errorMessage, isLoading, isSidebarExpanded, tasksLists]);
 
   return (
     <>
@@ -72,6 +76,12 @@ const Container = styled.div<{ isSidebarExpanded: boolean }>`
   &::-webkit-scrollbar-thumb {
     display: none;
   }
+`;
+
+const ErrorContainer = styled.div`
+  width: 200px;
+  color: var(--app-gold-color);
+  text-align: center;
 `;
 
 const ListsContainerTitle = styled.span`

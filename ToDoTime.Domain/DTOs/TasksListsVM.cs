@@ -5,8 +5,8 @@ namespace ToDoTime.Domain.DTOs
     public class TasksListVM
     {
         public int Id { get; set; }
-        public string Name { get; set; } = "My list";
-        public string Description { get; set; } = "";
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string Icon { get; set; }
         public Dictionary<int, TaskVM> Tasks { get; } = new Dictionary<int, TaskVM>();
         public TasksListVM(TasksList tasksList)
@@ -15,11 +15,10 @@ namespace ToDoTime.Domain.DTOs
             Name = tasksList.Name;
             Description = tasksList.Description;
             Icon = tasksList.Icon;
-            foreach (var task in tasksList.Tasks)
+            if (tasksList.Tasks is not null)
             {
-                Tasks.Add(task.Id, new TaskVM(task));
+                Tasks = tasksList.Tasks.ToDictionary(t => t.Id, t => new TaskVM(t));
             }
-
         }
     }
 }

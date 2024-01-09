@@ -13,7 +13,6 @@ namespace ToDoTime.Application.Queries.TasksLists
 
         public async Task<List<TasksListVM>> Handle(GetAllTasksListsQuery request, CancellationToken cancellationToken)
         {
-
             var allTasksLists = await _dbRepo.TasksLists.Select(tl => new TasksListVM(tl)).ToListAsync(cancellationToken: cancellationToken);
 
             return allTasksLists;
