@@ -11,9 +11,11 @@ type EditableTitleProps = {
 export const EditableInput: React.FC<EditableTitleProps> = ({ value, onChange }) => {
   const [editedValue, setEditedValue] = useState(value);
   const [isEditing, setIsEditing] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   const onConfirm = useCallback(() => {
     const result = onChange(editedValue);
+    setIsInvalid(!result);
     if (result) {
       setIsEditing(false);
     }
@@ -30,7 +32,7 @@ export const EditableInput: React.FC<EditableTitleProps> = ({ value, onChange })
         <Input
           value={editedValue}
           onChange={(e) => setEditedValue(e.target.value)}
-          style={{ paddingRight: "70px" }}
+          style={{ paddingRight: "70px", color: isInvalid ? "red" : "black" }}
         />
         <IconsContainer>
           <BoxCustomIcon

@@ -6,9 +6,9 @@ namespace ToDoTime.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class TasksListsController(ILogger<TasksListsController> logger, ISender mediator) : ControllerBase
+    public class TasksListsController(ILogger<TasksListsController> logger, IMediator mediator) : ControllerBase
     {
-        private readonly ISender _mediator = mediator;
+        private readonly IMediator _mediator = mediator;
 
         private readonly ILogger<TasksListsController> _logger = logger;
 
@@ -17,6 +17,17 @@ namespace ToDoTime.Controllers
         {
             var tasksLists = await _mediator.Send(new GetAllTasksListsQuery());
             return Ok(tasksLists);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTasksList([FromQuery] int tasksListId)
+        {
+            var tasksList = await _mediator.Send(new GetTasksListQuery()
+            {
+                TasksListId = tasksListId
+            });
+
+            return Ok(tasksList);
         }
     }
 }

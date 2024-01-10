@@ -42,7 +42,8 @@ const Wrapper = styled.div`
   @media (min-width: 600px) {
     grid-template-columns: 150px 1fr 100px;
     grid-template-rows: 1fr;
-    align-items: center;
+    place-items: center;
+    height: 100%;
   }
 `;
 

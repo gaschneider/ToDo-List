@@ -3,7 +3,6 @@ import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
 import { useLoaderData } from "react-router-dom";
 import { OneEightyRingWithBg } from "react-svg-spinners";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
-import { useFetchTasksForList } from "./useFetchTasksForList";
 import { NoTasks } from "pages/layoutComponents/NoTasks";
 import { ListOfTasks } from "pages/layoutComponents/ListOfTasks";
 import { CreateNewTaskInline } from "pages/layoutComponents/CreateNewTaskInline";
@@ -11,28 +10,32 @@ import { useManageListOfTasks } from "./useManageListOfTasks";
 import { useManageTasksList } from "./useManageTasksList";
 import { EditableDescription } from "pages/layoutComponents/EditableDescription";
 import { EditableInput } from "shared/components/EditableInput";
+import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
 
 export const TasksListDetails: React.FC = () => {
   const listId = useLoaderData() as number;
-  const tasksList = useFetchTasksForList(listId);
+  const { tasksList, isLoading, errorMessage } = useGetTasksListDetails(listId);
   const { taskListDescription, taskListName, setDescription, onSetName } =
     useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
 
-  if (!tasksList || !taskListDescription || !taskListName) {
+  if (isLoading || !listOfTasks || !taskListDescription || !taskListName) {
     return (
-      <MainContainerTemplate title="Loading...">
+      <MainContainerTemplate title={errorMessage ? "Error loading" : "Loading..."}>
         <TasksWrapper>
-          <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
+          {errorMessage || <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />}
         </TasksWrapper>
       </MainContainerTemplate>
     );
   }
 
   return (
-    <MainContainerTemplate title={<EditableInput value={taskListName} onChange={onSetName} />}>
+    <MainContainerTemplate
+      title={<EditableInput key={listId} value={taskListName} onChange={onSetName} />}
+    >
       <ContentWrapper>
         <EditableDescription
+          key={listId}
           taskListDescription={taskListDescription}
           onSetDescription={setDescription}
         />
@@ -68,6 +71,7 @@ const TasksWrapper = styled.div`
   overflow: auto;
   grid-template-columns: 1fr;
   place-items: center;
+  color: var(--app-gold-color);
 `;
 
 const Divider = styled.hr`
