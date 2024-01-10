@@ -1,15 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ToDoTime.Application.Queries.TasksLists;
-using ToDoTime.Domain.Exceptions;
 
 namespace ToDoTime.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class TasksListsController(ILogger<TasksListsController> logger, ISender mediator) : ControllerBase
+    public class TasksListsController(ILogger<TasksListsController> logger, IMediator mediator) : ControllerBase
     {
-        private readonly ISender _mediator = mediator;
+        private readonly IMediator _mediator = mediator;
 
         private readonly ILogger<TasksListsController> _logger = logger;
 
@@ -23,19 +22,12 @@ namespace ToDoTime.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTasksList([FromQuery] int tasksListId)
         {
-            try
+            var tasksList = await _mediator.Send(new GetTasksListQuery()
             {
-                var tasksList = await _mediator.Send(new GetTasksListQuery()
-                {
-                    TasksListId = tasksListId
-                });
+                TasksListId = tasksListId
+            });
 
-                return Ok(tasksList);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
+            return Ok(tasksList);
         }
     }
 }

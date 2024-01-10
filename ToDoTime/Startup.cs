@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using ToDoTime.Application;
+using ToDoTime.Application.Middlewares;
 using ToDoTime.Infrastructure;
 
 namespace ToDoTime
@@ -24,6 +26,7 @@ namespace ToDoTime
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddSwaggerGen();
             services.AddApplication();
 
@@ -38,10 +41,7 @@ namespace ToDoTime
         {
             app.UseCors("AllowLocalHost");
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseCustomExceptionHandler();
 
             app.UseRouting();
 

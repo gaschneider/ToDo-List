@@ -1,4 +1,4 @@
-import { ENDPOINTS_URL } from "api/endpoints";
+import { BASE_URL, ENDPOINTS_URL } from "api/endpoints";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { TasksList } from "shared/types/TasksList";
@@ -12,12 +12,12 @@ export const useGetTasksListDetails = (listId: number) => {
     if (listId <= 0) return;
 
     axios
-      .get(ENDPOINTS_URL.getListDetails(listId))
+      .get(`${BASE_URL}${ENDPOINTS_URL.getListDetails(listId)}`)
       .then((res) => {
         setTasksList(res.data);
       })
       .catch((error) => {
-        setErrorMessage(`${error.response.data.status} - ${error.response.data.title}`);
+        setErrorMessage(error.response.data);
       })
       .finally(() => {
         setIsLoading(false);
