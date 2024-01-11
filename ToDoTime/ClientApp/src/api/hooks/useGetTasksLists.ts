@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TasksList } from "shared/types/TasksList";
-import axios from "axios";
-import { BASE_URL, ENDPOINTS_URL } from "api/endpoints";
+import { ENDPOINTS_URL } from "api/endpoints";
+import { axiosInstance } from "api/axiosInstance";
 
 export const useGetTasksLists = () => {
   const [tasksLists, setTasksLists] = useState<TasksList[]>([]);
@@ -9,8 +9,8 @@ export const useGetTasksLists = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}${ENDPOINTS_URL.getAllLists}`)
+    axiosInstance
+      .get(ENDPOINTS_URL.getAllLists)
       .then((res) => {
         setTasksLists(res.data);
       })

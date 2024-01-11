@@ -29,5 +29,13 @@ namespace ToDoTime.Controllers
 
             return Ok(tasksList);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTasksList([FromBody] CreateTasksListCommand command)
+        {
+            var tasksListId = await _mediator.Send(command);
+
+            return Ok(tasksListId);
+        }
     }
 }
