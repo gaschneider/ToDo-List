@@ -1,32 +1,26 @@
 import { axiosInstance } from "api/axiosInstance";
 import { ENDPOINTS_URL } from "api/endpoints";
-import { useEffect, useState } from "react";
+import { ErrorResponse } from "api/types/ErrorResponse";
+import { useQuery } from "react-query";
 import { TasksList } from "shared/types/TasksList";
 
+const retrieveListDetail = async (listId: number) => {
+  const response = await axiosInstance.get(ENDPOINTS_URL.getListDetails(listId));
+  return response.data;
+};
+
 export const useGetTasksListDetails = (listId: number) => {
-  const [tasksList, setTasksList] = useState<TasksList>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string>();
-
-  useEffect(() => {
-    if (listId <= 0) return;
-
-    axiosInstance
-      .get(ENDPOINTS_URL.getListDetails(listId))
-      .then((res) => {
-        setTasksList(res.data);
-      })
-      .catch((error) => {
-        setErrorMessage(error.response.data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [listId]);
+  const {
+    data: tasksList,
+    error,
+    isLoading
+  } = useQuery<TasksList, ErrorResponse>(`tasksListDetailData-${listId}`, () =>
+    retrieveListDetail(listId)
+  );
 
   return {
     tasksList,
     isLoading,
-    errorMessage
+    errorMessage: error?.response.data
   };
 };

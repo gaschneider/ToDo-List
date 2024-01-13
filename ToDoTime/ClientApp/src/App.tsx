@@ -15,6 +15,7 @@ import { TaskDetail } from "pages/TaskDetail";
 import { Lists } from "pages/Lists";
 import { TasksListDetails } from "pages/tasksListDetails/TasksListDetails";
 import { tasksListDetailsLoader } from "routesLoader/tasksListDetailsLoader";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter([
   {
@@ -47,8 +48,21 @@ const router = createBrowserRouter([
   }
 ]);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false
+    }
+  }
+});
+
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 };
 
 export default App;

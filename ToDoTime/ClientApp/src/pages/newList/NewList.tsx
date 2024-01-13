@@ -9,13 +9,30 @@ import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 import { useNewListForm } from "./useNewListForm";
 import { TextArea } from "shared/components/TextArea";
 import { Button } from "shared/components/Button";
+import { OneEightyRingWithBg } from "react-svg-spinners";
 
 export const NewList = () => {
-  const { nameInputProps, iconSelectProps, descriptionAreaProps, submitFormProps, errorMessages } =
-    useNewListForm();
+  const {
+    nameInputProps,
+    iconSelectProps,
+    descriptionAreaProps,
+    submitFormProps,
+    errorMessages,
+    submitIsProcessing,
+    submitErrorMessage
+  } = useNewListForm();
+
+  if (submitIsProcessing) {
+    return (
+      <MainContainerTemplate title="New List">
+        <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
+      </MainContainerTemplate>
+    );
+  }
 
   return (
     <MainContainerTemplate title="New List">
+      {submitErrorMessage && <ErrorContainer>{submitErrorMessage}</ErrorContainer>}
       <FormGrid>
         <Field>Name:</Field>
         <Value>
@@ -104,4 +121,8 @@ const ErrorMessageSpan = styled.span`
 
 const Optional = styled.span`
   font-size: 9px;
+`;
+
+const ErrorContainer = styled.span`
+  font-size: 16px;
 `;
