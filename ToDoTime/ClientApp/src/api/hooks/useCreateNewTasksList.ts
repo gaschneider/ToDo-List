@@ -1,4 +1,4 @@
-import { ENDPOINTS_URL } from "api/endpoints";
+import { ENDPOINTS_URL, QUERY_KEYS } from "api/endpoints";
 import { axiosInstance } from "api/axiosInstance";
 import { CreateTasksListDTO } from "api/types/CreateTasksListDTO";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ export const useCreateNewTasksList = () => {
       navigate(newTaskListRoute);
     },
     onSettled: () => {
-      queryClient.invalidateQueries("tasksListData");
+      queryClient.invalidateQueries(QUERY_KEYS.getAllLists);
     }
   });
 

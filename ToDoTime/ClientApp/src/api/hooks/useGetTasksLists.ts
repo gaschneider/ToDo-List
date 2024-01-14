@@ -1,4 +1,4 @@
-import { ENDPOINTS_URL } from "api/endpoints";
+import { ENDPOINTS_URL, QUERY_KEYS } from "api/endpoints";
 import { axiosInstance } from "api/axiosInstance";
 import { useQuery } from "react-query";
 import { TasksList } from "shared/types/TasksList";
@@ -14,7 +14,7 @@ export const useGetTasksLists = () => {
     data: tasksLists,
     error,
     isLoading
-  } = useQuery<TasksList[], ErrorResponse>("tasksListData", retrieveLists);
+  } = useQuery<TasksList[], ErrorResponse>(QUERY_KEYS.getAllLists, retrieveLists);
 
   return {
     tasksLists,
