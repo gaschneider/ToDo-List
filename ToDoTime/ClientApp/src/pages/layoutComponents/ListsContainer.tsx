@@ -16,7 +16,7 @@ export const ListsContainer: React.FC<ListsContainerProps> = ({ isSidebarExpande
   const { tasksLists, isLoading, errorMessage } = useGetTasksLists();
 
   const containerContent = useMemo(() => {
-    if (isLoading) {
+    if (isLoading || !tasksLists) {
       return <OneEightyRingWithBg color={APP_GOLD_COLOR} width={20} height={20} />;
     }
 

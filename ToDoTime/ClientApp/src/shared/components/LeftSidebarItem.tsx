@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AvailableIconsEnum } from "shared/availableIcons";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { APP_GOLD_COLOR } from "shared/constants/appStyles";
@@ -20,15 +20,21 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
   icon,
   tooltipId
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <ListItem isSidebarExpanded={isSidebarExpanded} data-tooltip-id={tooltipId}>
-      <ListItemLink to={to}>
+    <ListItem
+      isSidebarExpanded={isSidebarExpanded}
+      data-tooltip-id={tooltipId}
+      onClick={() => navigate(to)}
+    >
+      <ListItemSpan>
         {isSidebarExpanded ? (
           title
         ) : (
           <BoxCustomIcon nameIcon={icon} propsIcon={{ size: 30, color: "black" }} />
         )}
-      </ListItemLink>
+      </ListItemSpan>
       <ReactTooltip
         id={tooltipId}
         place="right"
@@ -71,15 +77,9 @@ const ListItem = styled.span<{ isSidebarExpanded: boolean }>`
   }
 `;
 
-const ListItemLink = styled(Link)`
+const ListItemSpan = styled.span`
   color: inherit;
-  text-decoration: none;
   text-overflow: ellipsis;
   text-wrap: nowrap;
   overflow: hidden;
-
-  &:hover {
-    color: inherit;
-    text-decoration: none;
-  }
 `;

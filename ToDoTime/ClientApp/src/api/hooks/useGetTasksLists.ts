@@ -1,30 +1,24 @@
-import { useEffect, useState } from "react";
+import { ENDPOINTS_URL, QUERY_KEYS } from "api/endpoints";
+import { axiosInstance } from "api/axiosInstance";
+import { useQuery } from "react-query";
 import { TasksList } from "shared/types/TasksList";
-import axios from "axios";
-import { BASE_URL, ENDPOINTS_URL } from "api/endpoints";
+import { ErrorResponse } from "api/types/ErrorResponse";
+
+const retrieveLists = async () => {
+  const response = await axiosInstance.get(ENDPOINTS_URL.getAllLists);
+  return response.data;
+};
 
 export const useGetTasksLists = () => {
-  const [tasksLists, setTasksLists] = useState<TasksList[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string>();
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}${ENDPOINTS_URL.getAllLists}`)
-      .then((res) => {
-        setTasksLists(res.data);
-      })
-      .catch((error) => {
-        setErrorMessage(error.response.data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const {
+    data: tasksLists,
+    error,
+    isLoading
+  } = useQuery<TasksList[], ErrorResponse>(QUERY_KEYS.getAllLists, retrieveLists);
 
   return {
     tasksLists,
     isLoading,
-    errorMessage
+    errorMessage: error?.response.data
   };
 };

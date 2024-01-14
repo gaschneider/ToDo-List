@@ -1,11 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ToDoTime.Domain.Entities;
-
-namespace ToDoTime.Infrastructure
+﻿namespace ToDoTime.Infrastructure
 {
-    public interface IToDoTimeSQLContext
+    public interface IToDoTimeSQLContext : IToDoTimeSQLContextBase
     {
-        public DbSet<TasksList> TasksLists { get; set; }
-        public DbSet<Domain.Entities.Task> Tasks { get; set; }
+        Task<int> SaveChangeAsync(CancellationToken cancellationToken);
     }
 }

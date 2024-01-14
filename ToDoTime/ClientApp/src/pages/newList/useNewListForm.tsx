@@ -12,6 +12,8 @@ import styles from "./NewList.module.scss";
 import styled from "@emotion/styled";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
 import { validateListName } from "shared/helpers/validations";
+import { useCreateNewTasksList } from "api/hooks/useCreateNewTasksList";
+import { CreateTasksListDTO } from "api/types/CreateTasksListDTO";
 
 type IconOptionType = {
   value: string;
@@ -29,6 +31,11 @@ export const useNewListForm = () => {
   const [listDescription, setListDescription] = useState<string>();
   const [isFormValid, setIsFormValid] = useState(false);
   const [errorMessages, setErrorMessages] = useState<NewListFormErrorMessagesType>();
+  const {
+    errorMessage: submitErrorMessage,
+    isLoading: submitIsProcessing,
+    createNewTasksList
+  } = useCreateNewTasksList();
 
   const fieldsChangedRef = useRef({ listName: false, listIcon: false });
 
@@ -130,14 +137,21 @@ export const useNewListForm = () => {
     [listDescription, onChangeListDescription]
   );
 
-  const onSubmit: MouseEventHandler<HTMLButtonElement> = () => {};
+  const onSubmit: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
+    const dto: CreateTasksListDTO = {
+      name: listName,
+      icon: selectedIcon?.value ?? "",
+      description: listDescription
+    };
+    createNewTasksList(dto);
+  }, [createNewTasksList, listDescription, listName, selectedIcon?.value]);
 
   const submitFormProps = useMemo(
     () => ({
       onClick: onSubmit,
       disabled: !isFormValid
     }),
-    [isFormValid]
+    [isFormValid, onSubmit]
   );
 
   return useMemo(
@@ -146,9 +160,19 @@ export const useNewListForm = () => {
       iconSelectProps,
       descriptionAreaProps,
       submitFormProps,
-      errorMessages
+      errorMessages,
+      submitErrorMessage,
+      submitIsProcessing
     }),
-    [descriptionAreaProps, errorMessages, iconSelectProps, nameInputProps, submitFormProps]
+    [
+      descriptionAreaProps,
+      errorMessages,
+      iconSelectProps,
+      nameInputProps,
+      submitErrorMessage,
+      submitFormProps,
+      submitIsProcessing
+    ]
   );
 };
 
