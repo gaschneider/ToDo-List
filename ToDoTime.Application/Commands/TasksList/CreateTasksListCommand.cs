@@ -3,7 +3,7 @@ using MediatR;
 using ToDoTime.Domain.Entities;
 using ToDoTime.Infrastructure;
 
-namespace ToDoTime.Application.Queries.TasksLists
+namespace ToDoTime.Application.Commands.TasksLists
 {
     public class CreateTasksListCommand : IRequest<int>
     {
@@ -12,9 +12,9 @@ namespace ToDoTime.Application.Queries.TasksLists
         public string Description { get; set; }
     }
 
-    public class Validator : AbstractValidator<CreateTasksListCommand>
+    public class CreateTasksListCommandValidator : AbstractValidator<CreateTasksListCommand>
     {
-        public Validator()
+        public CreateTasksListCommandValidator()
         {
             RuleFor(_ => _.Name).NotEmpty().WithMessage("Field name must not be null");
             RuleFor(_ => _.Name).MinimumLength(5).WithMessage("Field name should have at least 5 characters");

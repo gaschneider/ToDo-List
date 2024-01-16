@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ToDoTime.Application.Commands.TasksLists;
 using ToDoTime.Application.Queries.TasksLists;
 
 namespace ToDoTime.Controllers
@@ -36,6 +37,14 @@ namespace ToDoTime.Controllers
             var tasksListId = await _mediator.Send(command);
 
             return Ok(tasksListId);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateTasksList([FromBody] UpdateTasksListCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
         }
     }
 }

@@ -11,19 +11,25 @@ import { useManageTasksList } from "./useManageTasksList";
 import { EditableDescription } from "pages/layoutComponents/EditableDescription";
 import { EditableInput } from "shared/components/EditableInput";
 import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
+import { TasksList } from "shared/types/TasksList";
+import { memo } from "react";
 
-export const TasksListDetails: React.FC = () => {
-  const listId = useLoaderData() as number;
-  const { tasksList, isLoading, errorMessage } = useGetTasksListDetails(listId);
-  const { taskListDescription, taskListName, setDescription, onSetName } =
+type WithTasksListProps = {
+  tasksList: TasksList;
+};
+
+const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) => {
+  const { onChangeName, onChangeDescription, isPatching, patchErrorMessage } =
     useManageTasksList(tasksList);
-  const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList?.tasks);
+  const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList.tasks);
 
-  if (isLoading || !listOfTasks || !taskListName) {
+  if (isPatching) {
     return (
-      <MainContainerTemplate title={errorMessage ? "Error loading" : "Loading..."}>
+      <MainContainerTemplate title={patchErrorMessage ? "Error updating" : "Updating..."}>
         <TasksWrapper>
-          {errorMessage || <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />}
+          {patchErrorMessage || (
+            <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
+          )}
         </TasksWrapper>
       </MainContainerTemplate>
     );
@@ -31,13 +37,13 @@ export const TasksListDetails: React.FC = () => {
 
   return (
     <MainContainerTemplate
-      title={<EditableInput key={listId} value={taskListName} onChange={onSetName} />}
+      title={<EditableInput key={tasksList.id} value={tasksList.name} onChange={onChangeName} />}
     >
       <ContentWrapper>
         <EditableDescription
-          key={listId}
-          taskListDescription={taskListDescription}
-          onSetDescription={setDescription}
+          key={tasksList.id}
+          taskListDescription={tasksList.description}
+          onSetDescription={onChangeDescription}
         />
         <TasksWrapper>
           {Object.keys(listOfTasks).length === 0 ? (
@@ -54,6 +60,37 @@ export const TasksListDetails: React.FC = () => {
     </MainContainerTemplate>
   );
 };
+
+const withTasksList = <TProps extends WithTasksListProps>(
+  Component: React.ComponentType<TProps>
+) => {
+  const displayName = Component.displayName || "Component";
+
+  const ComponentWithTasksList = (props: Omit<TProps, keyof WithTasksListProps>) => {
+    const listId = useLoaderData() as number;
+    const { tasksList, isLoading, errorMessage } = useGetTasksListDetails(listId);
+
+    if (isLoading || !tasksList) {
+      return (
+        <MainContainerTemplate title={errorMessage ? "Error loading" : "Loading..."}>
+          <TasksWrapper>
+            {errorMessage || (
+              <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
+            )}
+          </TasksWrapper>
+        </MainContainerTemplate>
+      );
+    }
+
+    return <Component {...(props as TProps)} tasksList={tasksList} />;
+  };
+
+  ComponentWithTasksList.displayName = `withTasksList${displayName}`;
+
+  return ComponentWithTasksList;
+};
+
+export const TasksListDetails = withTasksList(memo(TasksListDetailsComponent));
 
 const ContentWrapper = styled.div`
   display: grid;
