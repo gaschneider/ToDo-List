@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 // Useful to check for the props on react-select-virtualized since the lib doesnt have types
 // import Select from "react-select";
-import ReactSelect from "react-select-virtualized";
+import ReactSelectVirtualized from "react-select-virtualized";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
 import { Input } from "shared/components/Input";
 import { MainContainerTemplate } from "shared/components/MainContainerTemplate";
@@ -45,7 +45,7 @@ export const NewList = () => {
           <ValueWrapper>
             {/* Useful to check for the props on react-select-virtualized since the lib doesnt have types */}
             {/* <Select /> */}
-            <ReactSelect {...iconSelectProps} />
+            <ReactSelectVirtualized {...iconSelectProps} />
             {iconSelectProps.value && (
               <BoxCustomIcon
                 nameIcon={iconSelectProps.value.value}

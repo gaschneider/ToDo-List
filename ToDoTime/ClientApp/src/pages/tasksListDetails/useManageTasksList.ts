@@ -44,10 +44,29 @@ export const useManageTasksList = (tasksList: TasksList) => {
     [tasksList.id, updateTasksList]
   );
 
+  const onChangeIcon = useCallback(
+    (icon?: string) => {
+      if (icon) {
+        const dto: UpdateTasksListDTO = {
+          id: tasksList.id,
+          icon,
+          shouldUpdate: {
+            icon: true
+          }
+        };
+        updateTasksList(dto);
+      }
+
+      return !!icon;
+    },
+    [tasksList.id, updateTasksList]
+  );
+
   return {
     isPatching,
     patchErrorMessage,
     onChangeName,
+    onChangeIcon,
     onChangeDescription
   };
 };

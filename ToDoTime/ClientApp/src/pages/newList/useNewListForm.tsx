@@ -7,18 +7,10 @@ import {
   useRef,
   useState
 } from "react";
-import { AvailableIconsEnum } from "shared/availableIcons";
-import styles from "./NewList.module.scss";
-import styled from "@emotion/styled";
-import { BoxCustomIcon } from "shared/BoxCustomIcon";
 import { validateListName } from "shared/helpers/validations";
 import { useCreateNewTasksList } from "api/hooks/useCreateNewTasksList";
 import { CreateTasksListDTO } from "api/types/CreateTasksListDTO";
-
-type IconOptionType = {
-  value: string;
-  label: string;
-};
+import { useIconSelector } from "shared/hooks/useIconSelector/useIconSelector";
 
 type NewListFormErrorMessagesType = {
   invalidName?: string;
@@ -27,7 +19,6 @@ type NewListFormErrorMessagesType = {
 
 export const useNewListForm = () => {
   const [listName, setListName] = useState("My List");
-  const [selectedIcon, setSelectedIcon] = useState<IconOptionType>();
   const [listDescription, setListDescription] = useState<string>();
   const [isFormValid, setIsFormValid] = useState(false);
   const [errorMessages, setErrorMessages] = useState<NewListFormErrorMessagesType>();
@@ -38,6 +29,10 @@ export const useNewListForm = () => {
   } = useCreateNewTasksList();
 
   const fieldsChangedRef = useRef({ listName: false, listIcon: false });
+
+  const { iconSelectProps } = useIconSelector({
+    onChangeIconCallback: () => (fieldsChangedRef.current.listIcon = true)
+  });
 
   const validateForm = useCallback(() => {
     const newErrorMessages: NewListFormErrorMessagesType = {};
@@ -50,7 +45,7 @@ export const useNewListForm = () => {
     }
 
     if (fieldsChanged.listIcon) {
-      if (!selectedIcon) {
+      if (!iconSelectProps.value) {
         newErrorMessages.invalidIcon = "An icon must be selected.";
       }
     }
@@ -61,29 +56,11 @@ export const useNewListForm = () => {
     }
 
     return fieldsChanged.listIcon;
-  }, [listName, selectedIcon]);
+  }, [listName, iconSelectProps.value]);
 
   useEffect(() => {
     setIsFormValid(validateForm());
   }, [validateForm]);
-
-  const options = useMemo(() => {
-    const innerOptions: IconOptionType[] = [];
-    Object.keys(AvailableIconsEnum).forEach((k) => {
-      // Remove the first two characters
-      const trimmedString = k.slice(2);
-
-      // Split the string whenever an uppercase letter is found
-      const formattedString = trimmedString.replace(/([A-Z])/g, " $1");
-
-      innerOptions.push({
-        value: k,
-        label: formattedString.trim()
-      });
-    });
-
-    return innerOptions;
-  }, []);
 
   const onChangeListName: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setListName(e.target.value);
@@ -96,33 +73,6 @@ export const useNewListForm = () => {
       onChange: onChangeListName
     }),
     [listName, onChangeListName]
-  );
-
-  const iconSelectProps = useMemo(
-    () => ({
-      value: selectedIcon,
-      onChange: (option: IconOptionType) => {
-        setSelectedIcon(option);
-        fieldsChangedRef.current.listIcon = true;
-      },
-      options,
-      formatOptionLabel: (option: IconOptionType) => {
-        return (
-          <IconOptionRendered>
-            <BoxCustomIcon
-              nameIcon={option.value}
-              propsIcon={{ size: 25, style: { marginRight: 10 } }}
-            />
-            {option.label}
-          </IconOptionRendered>
-        );
-      },
-      classNames: {
-        container: () => styles["new-list-icon-select-container"],
-        menu: () => styles["new-list-icon-select-menu"]
-      }
-    }),
-    [options, selectedIcon]
   );
 
   const onChangeListDescription: ChangeEventHandler<HTMLTextAreaElement> = useCallback((e) => {
@@ -140,11 +90,11 @@ export const useNewListForm = () => {
   const onSubmit: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
     const dto: CreateTasksListDTO = {
       name: listName,
-      icon: selectedIcon?.value ?? "",
+      icon: iconSelectProps.value?.value ?? "",
       description: listDescription
     };
     createNewTasksList(dto);
-  }, [createNewTasksList, listDescription, listName, selectedIcon?.value]);
+  }, [createNewTasksList, iconSelectProps.value?.value, listDescription, listName]);
 
   const submitFormProps = useMemo(
     () => ({
@@ -175,8 +125,3 @@ export const useNewListForm = () => {
     ]
   );
 };
-
-const IconOptionRendered = styled.div`
-  display: flex;
-  align-items: center;
-`;

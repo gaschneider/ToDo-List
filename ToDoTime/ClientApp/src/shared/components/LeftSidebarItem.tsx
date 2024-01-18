@@ -32,7 +32,7 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
         {isSidebarExpanded ? (
           title
         ) : (
-          <BoxCustomIcon nameIcon={icon} propsIcon={{ size: 30, color: "black" }} />
+          <BoxCustomIcon nameIcon={icon} propsIcon={{ size: 30, color: APP_GOLD_COLOR }} />
         )}
       </ListItemSpan>
       <ReactTooltip
