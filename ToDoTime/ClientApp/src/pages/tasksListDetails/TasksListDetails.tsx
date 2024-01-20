@@ -13,9 +13,11 @@ import { EditableDescription } from "pages/layoutComponents/EditableDescription"
 import { EditableInput } from "shared/components/EditableInput";
 import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
 import { TasksList } from "shared/types/TasksList";
-import { memo, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
 import { useIconSelector } from "shared/hooks/useIconSelector/useIconSelector";
+import { Modal } from "shared/components/Modal";
+import { Button } from "shared/components/Button";
 
 type WithTasksListProps = {
   tasksList: TasksList;
@@ -23,12 +25,21 @@ type WithTasksListProps = {
 
 const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) => {
   const [isEditingIcon, setIsEditingIcon] = useState(false);
-  const { onChangeName, onChangeDescription, onChangeIcon, isPatching, patchErrorMessage } =
-    useManageTasksList(tasksList);
+  const {
+    onChangeName,
+    onChangeDescription,
+    onChangeIcon,
+    isPatching,
+    patchErrorMessage,
+    deleteErrorMessage,
+    isDeleting,
+    onDelete
+  } = useManageTasksList(tasksList);
   const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList.tasks);
   const { iconSelectProps, resetSelectedIcon } = useIconSelector({
     initialSelectedIcon: tasksList.icon
   });
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const title = useMemo(() => {
     if (isEditingIcon) {
@@ -92,7 +103,20 @@ const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) 
             style: { cursor: "pointer" }
           }}
         />
-        <EditableInput key={tasksList.id} value={tasksList.name} onChange={onChangeName} />
+        <InputSection>
+          <EditableInput key={tasksList.id} value={tasksList.name} onChange={onChangeName} />
+        </InputSection>
+        <DeleteSection>
+          <BoxCustomIcon
+            nameIcon="BiTrash"
+            propsIcon={{
+              size: 32,
+              color: APP_GOLD_COLOR,
+              onClick: () => setIsDeleteModalOpen(true),
+              style: { cursor: "pointer" }
+            }}
+          />
+        </DeleteSection>
       </TitleSection>
     );
   }, [
@@ -106,9 +130,17 @@ const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) 
     tasksList.name
   ]);
 
-  if (isPatching) {
+  const closeModal = useCallback(() => {
+    setIsDeleteModalOpen(false);
+  }, []);
+
+  if (isPatching || isDeleting) {
+    let message = patchErrorMessage ? "Error updating" : "Updating...";
+    if (isDeleting || deleteErrorMessage) {
+      message = deleteErrorMessage ? "Error deleting" : "Deleting...";
+    }
     return (
-      <MainContainerTemplate title={patchErrorMessage ? "Error updating" : "Updating..."}>
+      <MainContainerTemplate title={message}>
         <TasksWrapper>
           {patchErrorMessage || (
             <OneEightyRingWithBg color={APP_GOLD_COLOR} width={150} height={150} />
@@ -121,6 +153,22 @@ const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) 
   return (
     <MainContainerTemplate title={title}>
       <ContentWrapper>
+        <Modal
+          isOpen={isDeleteModalOpen}
+          onClose={closeModal}
+          title={`Delete: ${tasksList.name}?`}
+          onBackdropClick={closeModal}
+        >
+          <ModalContent>
+            <ModalText>Are you sure you want to delete the selected list ?</ModalText>
+            <ModalButtons>
+              <Button onClick={() => onDelete(tasksList.id)}>Delete</Button>
+              <Button onClick={closeModal} neutral>
+                Cancel
+              </Button>
+            </ModalButtons>
+          </ModalContent>
+        </Modal>
         <EditableDescription
           key={tasksList.id}
           taskListDescription={tasksList.description}
@@ -175,7 +223,7 @@ export const TasksListDetails = withTasksList(memo(TasksListDetailsComponent));
 
 const ContentWrapper = styled.div`
   display: grid;
-  grid-template-rows: 100px 1fr 50px;
+  grid-template-rows: 100px 1fr 85px;
   height: 100%;
 `;
 
@@ -199,6 +247,15 @@ const TitleSection = styled.div`
   gap: 20px;
   flex-direction: row;
 `;
+const InputSection = styled.div`
+  width: fit-content;
+  max-width: calc(100% - 37px - 37px);
+  overflow: hidden;
+  margin-left: auto;
+`;
+const DeleteSection = styled.div`
+  margin-left: auto;
+`;
 
 const IconSelectorSection = styled.div`
   max-width: 300px;
@@ -210,5 +267,26 @@ const Divider = styled.hr`
 `;
 
 const Footer = styled.div`
+  height: fit-content;
   padding: 3px;
+`;
+
+const ModalContent = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+`;
+const ModalText = styled.div`
+  width: 100%;
+  font-size: 15px;
+`;
+const ModalButtons = styled.div`
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
 `;

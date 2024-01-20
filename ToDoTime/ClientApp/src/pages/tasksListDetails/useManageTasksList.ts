@@ -1,3 +1,4 @@
+import { useDeleteTasksList } from "api/hooks/useDeleteTasksList";
 import { useUpdateTasksList } from "api/hooks/useUpdateTasksList";
 import { UpdateTasksListDTO } from "api/types/UpdateTasksListDTO";
 import { useCallback } from "react";
@@ -10,6 +11,11 @@ export const useManageTasksList = (tasksList: TasksList) => {
     isLoading: isPatching,
     errorMessage: patchErrorMessage
   } = useUpdateTasksList(tasksList.id);
+  const {
+    deleteTasksList,
+    isLoading: isDeleting,
+    errorMessage: deleteErrorMessage
+  } = useDeleteTasksList();
 
   const onChangeName = useCallback(
     (name: string) => {
@@ -67,6 +73,9 @@ export const useManageTasksList = (tasksList: TasksList) => {
     patchErrorMessage,
     onChangeName,
     onChangeIcon,
-    onChangeDescription
+    onChangeDescription,
+    onDelete: deleteTasksList,
+    isDeleting,
+    deleteErrorMessage
   };
 };

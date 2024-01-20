@@ -25,7 +25,6 @@ const Container = styled.div`
   grid-row-gap: 0px;
   padding: 4px;
   height: 100%;
-  margin-top: 5px;
 `;
 
 const ContainerTitle = styled.span`
@@ -33,7 +32,7 @@ const ContainerTitle = styled.span`
   color: var(--app-gold-color);
   font-weight: bold;
   text-align: center;
-  padding: 5px;
+  padding: 5px 5px 10px;
   border-bottom: 1px solid var(--app-gold-color);
   height: 35px;
   text-overflow: ellipsis;
@@ -42,7 +41,7 @@ const ContainerTitle = styled.span`
 `;
 
 const ContainerContent = styled.div`
-  height: calc(100% - 40px);
+  height: 100%;
   overflow-x: hidden;
-  padding: 20px;
+  padding: 20px 20px 0px;
 `;

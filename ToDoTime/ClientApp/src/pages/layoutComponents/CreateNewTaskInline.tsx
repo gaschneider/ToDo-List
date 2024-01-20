@@ -38,11 +38,13 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr;
   grid-gap: 20px;
   place-items: center;
+  height: 155px;
 
   @media (min-width: 600px) {
     grid-template-columns: 150px 1fr 100px;
     grid-template-rows: 1fr;
     place-items: center;
+    padding: 8px 0px;
     height: 100%;
   }
 `;

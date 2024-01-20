@@ -46,5 +46,16 @@ namespace ToDoTime.Controllers
 
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTasksList([FromQuery] int tasksListId)
+        {
+            var tasksList = await _mediator.Send(new DeleteTasksListCommand()
+            {
+                TasksListId = tasksListId
+            });
+
+            return Ok();
+        }
     }
 }

@@ -42,7 +42,7 @@ export const EditableDescription: React.FC<EditableDescriptionProps> = ({
     <DescriptionContainer>
       <Description>{taskListDescription}</Description>
       <BoxCustomIcon
-        nameIcon="BiCommentEdit"
+        nameIcon="BiEdit"
         propsIcon={{
           style: { width: 25, height: 25, cursor: "pointer" },
           onClick: () => {
