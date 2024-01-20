@@ -9,7 +9,7 @@ namespace ToDoTime.Application.Commands.TasksLists
     {
         public string Name { get; set; }
         public string Icon { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; } = string.Empty;
     }
 
     public class CreateTasksListCommandValidator : AbstractValidator<CreateTasksListCommand>
