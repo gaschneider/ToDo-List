@@ -4,9 +4,9 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime? Date { get; set; }
-        public bool Asap { get; set; }
+        public bool? Asap { get; set; }
         public bool Done { get; set; }
         public int TasksListId { get; set; }
 
