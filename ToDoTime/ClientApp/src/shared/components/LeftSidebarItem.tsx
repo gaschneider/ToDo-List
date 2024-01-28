@@ -29,11 +29,7 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
       onClick={() => navigate(to)}
     >
       <ListItemSpan>
-        {isSidebarExpanded ? (
-          title
-        ) : (
-          <BoxCustomIcon nameIcon={icon} propsIcon={{ size: 30, color: "black" }} />
-        )}
+        {isSidebarExpanded ? title : <BoxCustomIcon nameIcon={icon} propsIcon={{ size: 30 }} />}
       </ListItemSpan>
       <ReactTooltip
         id={tooltipId}

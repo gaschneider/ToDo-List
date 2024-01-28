@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
+import { APP_GOLD_COLOR } from "shared/constants/appStyles";
 
-export const Button = styled.button`
-  background-color: var(--app-gold-color);
+export const Button = styled.button<{ neutral?: boolean }>`
+  background-color: ${(props) => (props.neutral ? "white" : APP_GOLD_COLOR)};
   border-radius: 10px;
   height: 30px;
   min-width: fit-content;
@@ -12,8 +13,15 @@ export const Button = styled.button`
 
   :hover:not(:disabled) {
     background-color: black;
-    color: var(--app-gold-color);
+    color: ${(props) => (props.neutral ? "white" : APP_GOLD_COLOR)};
     cursor: pointer;
-    box-shadow: 2px 2px 5px 0px var(--app-gold-color);
+    box-shadow: ${(props) =>
+      props.neutral ? "2px 2px 5px 0px black" : `2px 2px 5px 0px ${APP_GOLD_COLOR}`};
   }
+`;
+
+export const SmallButton = styled(Button)`
+  height: 20px;
+  font-size: 12px;
+  font-weight: bold;
 `;

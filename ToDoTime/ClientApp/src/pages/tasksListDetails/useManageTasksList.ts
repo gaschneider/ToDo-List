@@ -1,43 +1,77 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useDeleteTasksList } from "api/hooks/useDeleteTasksList";
+import { useUpdateTasksList } from "api/hooks/useUpdateTasksList";
+import { UpdateTasksListDTO } from "api/types/UpdateTasksListDTO";
+import { useCallback } from "react";
 import { validateListName } from "shared/helpers/validations";
 import { TasksList } from "shared/types/TasksList";
 
-type UseManageTasksListHook = (tasksList?: TasksList) => {
-  taskListDescription?: string;
-  taskListName?: string;
-  setDescription: Dispatch<SetStateAction<string | undefined>>;
-  onSetName: (name: string) => boolean;
-};
+export const useManageTasksList = (tasksList: TasksList) => {
+  const {
+    updateTasksList,
+    isUpdating,
+    errorMessage: patchErrorMessage
+  } = useUpdateTasksList(tasksList.id);
+  const { deleteTasksList, isDeleting, errorMessage: deleteErrorMessage } = useDeleteTasksList();
 
-export const useManageTasksList: UseManageTasksListHook = (tasksList) => {
-  const [description, setDescription] = useState(tasksList?.description);
-  const [name, setName] = useState(tasksList?.name);
+  const onChangeName = useCallback(
+    (name: string) => {
+      const { isValid } = validateListName(name);
+      if (isValid) {
+        const dto: UpdateTasksListDTO = {
+          id: tasksList.id,
+          name,
+          shouldUpdate: {
+            name: true
+          }
+        };
+        updateTasksList(dto);
+      }
 
-  useEffect(() => {
-    if (tasksList?.description) {
-      setDescription(tasksList?.description);
-    }
-  }, [tasksList?.description]);
+      return isValid;
+    },
+    [tasksList.id, updateTasksList]
+  );
 
-  useEffect(() => {
-    if (tasksList?.name) {
-      setName(tasksList?.name);
-    }
-  }, [tasksList?.name]);
+  const onChangeDescription = useCallback(
+    (description?: string) => {
+      const dto: UpdateTasksListDTO = {
+        id: tasksList.id,
+        description,
+        shouldUpdate: {
+          description: true
+        }
+      };
+      updateTasksList(dto);
+    },
+    [tasksList.id, updateTasksList]
+  );
 
-  const onSetName = useCallback((name: string) => {
-    const { isValid } = validateListName(name);
-    if (isValid) {
-      setName(name);
-    }
+  const onChangeIcon = useCallback(
+    (icon?: string) => {
+      if (icon) {
+        const dto: UpdateTasksListDTO = {
+          id: tasksList.id,
+          icon,
+          shouldUpdate: {
+            icon: true
+          }
+        };
+        updateTasksList(dto);
+      }
 
-    return isValid;
-  }, []);
+      return !!icon;
+    },
+    [tasksList.id, updateTasksList]
+  );
 
   return {
-    taskListDescription: description,
-    taskListName: name,
-    onSetName,
-    setDescription
+    isUpdating,
+    patchErrorMessage,
+    onChangeName,
+    onChangeIcon,
+    onChangeDescription,
+    onDelete: deleteTasksList,
+    isDeleting,
+    deleteErrorMessage
   };
 };

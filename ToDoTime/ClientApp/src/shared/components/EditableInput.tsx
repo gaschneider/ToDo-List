@@ -83,7 +83,6 @@ const ValuContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
 `;
 

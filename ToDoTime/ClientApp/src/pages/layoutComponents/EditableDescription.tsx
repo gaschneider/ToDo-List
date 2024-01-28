@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BoxCustomIcon } from "shared/BoxCustomIcon";
 import { TextArea } from "shared/components/TextArea";
 
 type EditableDescriptionProps = {
   taskListDescription?: string;
-  onSetDescription: Dispatch<SetStateAction<string | undefined>>;
+  onSetDescription: (description?: string) => void;
 };
 
 export const EditableDescription: React.FC<EditableDescriptionProps> = ({
@@ -42,7 +42,7 @@ export const EditableDescription: React.FC<EditableDescriptionProps> = ({
     <DescriptionContainer>
       <Description>{taskListDescription}</Description>
       <BoxCustomIcon
-        nameIcon="BiCommentEdit"
+        nameIcon="BiEdit"
         propsIcon={{
           style: { width: 25, height: 25, cursor: "pointer" },
           onClick: () => {
