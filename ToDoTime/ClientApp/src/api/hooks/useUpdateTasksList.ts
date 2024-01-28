@@ -33,7 +33,7 @@ export const useUpdateTasksList = (listId: number) => {
 
   return {
     updateTasksList: mutate,
-    isLoading,
+    isUpdating: isLoading,
     errorMessage: error?.response.data
   };
 };

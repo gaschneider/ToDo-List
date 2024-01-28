@@ -21,7 +21,7 @@ export const useDeleteTasksList = () => {
 
   return {
     deleteTasksList: mutate,
-    isLoading,
+    isDeleting: isLoading,
     errorMessage: error?.response.data
   };
 };

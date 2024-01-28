@@ -8,14 +8,10 @@ import { TasksList } from "shared/types/TasksList";
 export const useManageTasksList = (tasksList: TasksList) => {
   const {
     updateTasksList,
-    isLoading: isPatching,
+    isUpdating,
     errorMessage: patchErrorMessage
   } = useUpdateTasksList(tasksList.id);
-  const {
-    deleteTasksList,
-    isLoading: isDeleting,
-    errorMessage: deleteErrorMessage
-  } = useDeleteTasksList();
+  const { deleteTasksList, isDeleting, errorMessage: deleteErrorMessage } = useDeleteTasksList();
 
   const onChangeName = useCallback(
     (name: string) => {
@@ -69,7 +65,7 @@ export const useManageTasksList = (tasksList: TasksList) => {
   );
 
   return {
-    isPatching,
+    isUpdating,
     patchErrorMessage,
     onChangeName,
     onChangeIcon,
