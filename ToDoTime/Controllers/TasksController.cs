@@ -13,11 +13,19 @@ namespace ToDoTime.Controllers
         private readonly ILogger<TasksController> _logger = logger;
 
         [HttpPost]
-        public async Task<IActionResult> AddTask([FromBody] AddTaskCommand command)
+        public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand command)
         {
-            var tasksListId = await _mediator.Send(command);
+            var taskId = await _mediator.Send(command);
 
-            return Ok(tasksListId);
+            return Ok(taskId);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskCommand command)
+        {
+            var taskId = await _mediator.Send(command);
+
+            return Ok(taskId);
         }
     }
 }

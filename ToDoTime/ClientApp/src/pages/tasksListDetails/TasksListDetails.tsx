@@ -30,7 +30,7 @@ const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) 
     isDeleting,
     onDelete
   } = useManageTasksList(tasksList);
-  const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList.tasks);
+  const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const closeModal = useCallback(() => {
