@@ -7,7 +7,9 @@ export const ENDPOINTS_URL = {
   updateListDetails: "/TasksLists/UpdateTasksList",
   deleteList: (listId: number) => `/TasksLists/DeleteTasksList?tasksListId=${listId}`,
   createNewTask: "/Tasks/CreateTask",
-  updateTask: "/Tasks/UpdateTask"
+  updateTask: "/Tasks/UpdateTask",
+  deleteTask: (listId: number, taskId: number) =>
+    `/Tasks/DeleteTask?tasksListId=${listId}&taskId=${taskId}`
 };
 
 export const QUERY_KEYS = {

@@ -1,5 +1,5 @@
-import { useDeleteTasksList } from "api/hooks/useDeleteTasksList";
-import { useUpdateTasksList } from "api/hooks/useUpdateTasksList";
+import { useDeleteTasksList } from "api/hooks/TasksList/useDeleteTasksList";
+import { useUpdateTasksList } from "api/hooks/TasksList/useUpdateTasksList";
 import { UpdateTasksListDTO } from "api/types/UpdateTasksListDTO";
 import { useCallback } from "react";
 import { validateListName } from "shared/helpers/validations";

@@ -50,7 +50,7 @@ namespace ToDoTime.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteTasksList([FromQuery] int tasksListId)
         {
-            var tasksList = await _mediator.Send(new DeleteTasksListCommand()
+            await _mediator.Send(new DeleteTasksListCommand()
             {
                 TasksListId = tasksListId
             });

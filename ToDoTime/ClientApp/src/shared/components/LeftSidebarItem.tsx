@@ -21,7 +21,7 @@ export const LeftSidebarItem: React.FC<LeftSidebarItemProps> = ({
   tooltipId
 }) => {
   const navigate = useNavigate();
-
+  console.log(isSidebarExpanded);
   return (
     <ListItem
       isSidebarExpanded={isSidebarExpanded}

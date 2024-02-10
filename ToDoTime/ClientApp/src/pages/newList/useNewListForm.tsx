@@ -8,7 +8,7 @@ import {
   useState
 } from "react";
 import { validateListName } from "shared/helpers/validations";
-import { useCreateNewTasksList } from "api/hooks/useCreateNewTasksList";
+import { useCreateNewTasksList } from "api/hooks/TasksList/useCreateNewTasksList";
 import { CreateTasksListDTO } from "api/types/CreateTasksListDTO";
 import { useIconSelector } from "shared/hooks/useIconSelector/useIconSelector";
 

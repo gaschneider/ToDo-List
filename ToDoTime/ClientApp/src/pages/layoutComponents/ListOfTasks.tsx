@@ -1,24 +1,27 @@
 import styled from "@emotion/styled";
-import { Checkbox } from "shared/components/Checkbox";
 import { Task } from "shared/types/Task";
+import { TaskComponent } from "./TaskComponent";
 
 type ListOfTasksProps = {
   tasks: Record<number, Task>;
   toggleTaskDone: (id: number) => void;
+  onDeleteTask: (taskId: number) => void;
 };
 
-export const ListOfTasks: React.FC<ListOfTasksProps> = ({ tasks, toggleTaskDone }) => {
+export const ListOfTasks: React.FC<ListOfTasksProps> = ({
+  tasks,
+  toggleTaskDone,
+  onDeleteTask
+}) => {
   return (
     <TasksWrapper>
       {Object.values(tasks).map((t) => (
-        <div key={t.id}>
-          <Checkbox
-            id={t.id.toString()}
-            label={t.name}
-            checked={t.done}
-            onToggle={() => toggleTaskDone(t.id)}
-          />
-        </div>
+        <TaskComponent
+          key={t.id}
+          task={t}
+          onDeleteTask={onDeleteTask}
+          toggleTaskDone={toggleTaskDone}
+        />
       ))}
     </TasksWrapper>
   );

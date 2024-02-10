@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useGetTasksLists } from "api/hooks/useGetTasksLists";
+import { useGetTasksLists } from "api/hooks/TasksList/useGetTasksLists";
 import { routes, tasksListDetailsRoute } from "routes";
 import { TasksList } from "shared/types/TasksList";
 import { NoListFound } from "./NoListFound";

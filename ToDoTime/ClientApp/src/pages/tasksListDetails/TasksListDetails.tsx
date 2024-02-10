@@ -9,7 +9,7 @@ import { CreateNewTaskInline } from "pages/layoutComponents/CreateNewTaskInline"
 import { useManageListOfTasks } from "./useManageListOfTasks";
 import { useManageTasksList } from "./useManageTasksList";
 import { EditableDescription } from "pages/layoutComponents/EditableDescription";
-import { useGetTasksListDetails } from "api/hooks/useGetTasksListDetails";
+import { useGetTasksListDetails } from "api/hooks/TasksList/useGetTasksListDetails";
 import { TasksList } from "shared/types/TasksList";
 import { useCallback, useState } from "react";
 import { DeleteListPrompt } from "./DeleteListPrompt";
@@ -30,7 +30,8 @@ const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) 
     isDeleting,
     onDelete
   } = useManageTasksList(tasksList);
-  const { listOfTasks, toggleTaskDone, onCreateTask } = useManageListOfTasks(tasksList);
+  const { listOfTasks, toggleTaskDone, onCreateTask, onDeleteTask } =
+    useManageListOfTasks(tasksList);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const closeModal = useCallback(() => {
@@ -83,7 +84,11 @@ const TasksListDetailsComponent: React.FC<WithTasksListProps> = ({ tasksList }) 
           {Object.keys(listOfTasks).length === 0 ? (
             <NoTasks />
           ) : (
-            <ListOfTasks tasks={listOfTasks} toggleTaskDone={toggleTaskDone} />
+            <ListOfTasks
+              tasks={listOfTasks}
+              toggleTaskDone={toggleTaskDone}
+              onDeleteTask={onDeleteTask}
+            />
           )}
         </TasksWrapper>
         <Footer>
